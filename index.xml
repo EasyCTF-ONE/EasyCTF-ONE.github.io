@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EasyCTF Blog</title><link>https://example.org/algolia.json</link><description>Recent content on EasyCTF Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 07 Jan 2025 21:01:51 +0800</lastBuildDate><atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml"/><item><title>docker</title><link>https://example.org/post/docker/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/docker/</guid><description>&lt;h2 id="一-安装docker">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EasyCTF Blog</title><link>https://easyctf-one.github.io/algolia.json</link><description>Recent content on EasyCTF Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 07 Jan 2025 21:01:51 +0800</lastBuildDate><atom:link href="https://easyctf-one.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>docker</title><link>https://easyctf-one.github.io/post/docker/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/post/docker/</guid><description>&lt;h2 id="一-安装docker">
 &lt;a class="header-anchor" href="#%e4%b8%80-%e5%ae%89%e8%a3%85docker">&lt;/a>
 一 安装docker
 &lt;/h2>&lt;p>阅读官方文档进行安装https://docs.docker.com/engine/install/ubuntu/&lt;/p>
@@ -44,7 +44,7 @@
 状态：docker stats
 日志：docker logs
 ==进入：docker exec==
-删除：docker rm&lt;/p></description></item><item><title>Linux的DNS服务器搭建</title><link>https://example.org/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</guid><description>&lt;h1 id="dns域名解析服务">
+删除：docker rm&lt;/p></description></item><item><title>Linux的DNS服务器搭建</title><link>https://easyctf-one.github.io/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</guid><description>&lt;h1 id="dns域名解析服务">
 &lt;a class="header-anchor" href="#dns%e5%9f%9f%e5%90%8d%e8%a7%a3%e6%9e%90%e6%9c%8d%e5%8a%a1">&lt;/a>
 DNS域名解析服务
 &lt;/h1>&lt;h2 id="准备工作">
@@ -154,7 +154,7 @@ yum软件仓库配置
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type master;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file &amp;#34;172.16.16.arpa&amp;#34;; 
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>注意：根域不能动&lt;/strong>&lt;/p></description></item><item><title>RCE绕过总结</title><link>https://example.org/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</guid><description>&lt;h2 id="常见可代替命令">
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>注意：根域不能动&lt;/strong>&lt;/p></description></item><item><title>RCE绕过总结</title><link>https://easyctf-one.github.io/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</guid><description>&lt;h2 id="常见可代替命令">
 &lt;a class="header-anchor" href="#%e5%b8%b8%e8%a7%81%e5%8f%af%e4%bb%a3%e6%9b%bf%e5%91%bd%e4%bb%a4">&lt;/a>
 常见可代替命令
 &lt;/h2>&lt;p>cat 查看文件内容&lt;/p>
@@ -217,7 +217,7 @@ ca&amp;quot;&amp;quot;t flag.txt
  
 作用为将文件以base64编码形式输出
 &lt;/code>&lt;/pre>
-&lt;p>bzip2：&lt;/p></description></item><item><title>Web安全</title><link>https://example.org/post/web%E5%AE%89%E5%85%A8/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/web%E5%AE%89%E5%85%A8/</guid><description>&lt;h2 id="php基本特性">
+&lt;p>bzip2：&lt;/p></description></item><item><title>Web安全</title><link>https://easyctf-one.github.io/post/web%E5%AE%89%E5%85%A8/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/post/web%E5%AE%89%E5%85%A8/</guid><description>&lt;h2 id="php基本特性">
 &lt;a class="header-anchor" href="#php%e5%9f%ba%e6%9c%ac%e7%89%b9%e6%80%a7">&lt;/a>
 php基本特性
 &lt;/h2>&lt;p>弱类型比较&lt;/p>
@@ -283,7 +283,7 @@ php基本特性
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
-&lt;p>数组传参?v1[]=1&amp;amp;v2[]=2&amp;amp;v3[]=3&lt;/p></description></item><item><title>搭建CTF平台</title><link>https://example.org/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</guid><description>&lt;h2 id="gzctf">
+&lt;p>数组传参?v1[]=1&amp;amp;v2[]=2&amp;amp;v3[]=3&lt;/p></description></item><item><title>搭建CTF平台</title><link>https://easyctf-one.github.io/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</guid><description>&lt;h2 id="gzctf">
 &lt;a class="header-anchor" href="#gzctf">&lt;/a>
 GZCTF
 &lt;/h2>&lt;p>在当前文件夹下（就是你GZCTF靶场的配置目录），创建 &lt;strong>appsettings.json&lt;/strong>：&lt;/p>
@@ -373,7 +373,7 @@ GZCTF
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;POSTGRES_PASSWORD=GzctfAuto233&amp;#34;&lt;/span>&lt;span class="w">          &lt;/span>&lt;span class="c1"># 数据库密码，务必要和appsettings.json中的配置一致
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">    &lt;/span>&lt;span class="n">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;./data/db:/var/lib/postgresql/data&amp;#34;&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改后的&lt;/p></description></item><item><title>关于</title><link>https://example.org/about/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/about/</guid><description/></item><item><title>友情链接</title><link>https://example.org/friend/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/friend/</guid><description>&lt;h2 id="本站信息">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改后的&lt;/p></description></item><item><title>关于</title><link>https://easyctf-one.github.io/about/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/about/</guid><description/></item><item><title>友情链接</title><link>https://easyctf-one.github.io/friend/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://easyctf-one.github.io/friend/</guid><description>&lt;h2 id="本站信息">
 &lt;a class="header-anchor" href="#%e6%9c%ac%e7%ab%99%e4%bf%a1%e6%81%af">&lt;/a>
 本站信息
 &lt;/h2>&lt;ul>
