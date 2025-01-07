@@ -1,1 +1,0 @@
-# EasyCTF-ONE.github.io
