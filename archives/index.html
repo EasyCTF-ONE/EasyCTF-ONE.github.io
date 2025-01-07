@@ -23,7 +23,7 @@
 </title>
 <meta
   name="description"
-  content="少女祈祷中..."
+  content="Learning CTF..."
 />
 
 
@@ -92,23 +92,13 @@
 
 
 
-  
-
-
-
-
-
-
- <link rel="stylesheet" href="/css/loader.css" />
-
-
 
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="归档 | EasyCTF" />
   <meta
     property="og:description"
-    content="少女祈祷中..."
+    content="Learning CTF..."
   />
   <meta property="og:url" content="http://localhost:1313/archives/" />
   <meta
@@ -209,48 +199,6 @@
   </head>
   <body>
     
-  <div id='loader'>
-    <div class="loading-left-bg loading-bg"></div>
-    <div class="loading-right-bg loading-bg"></div>
-    <div class="spinner-box">
-      <div class="loading-taichi">
-        
-          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
-            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff5252" />
-            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
-          M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="#ff5252" />
-          </svg>
-        
-      </div>
-      <div class="loading-word">少女祈祷中...</div>
-    </div>
-  </div>
-  </div>
-  <script>
-    var time = null;
-    var startLoading = () => {
-      time = Date.now();
-      document.getElementById('loader').classList.remove("loading");
-    }
-    var endLoading = () => {
-      if (!time) {
-        document.body.style.overflow = 'auto';
-        document.getElementById('loader').classList.add("loading");
-      } else {
-        if (Date.now() - time > 500) {
-          time = null;
-          document.body.style.overflow = 'auto';
-          document.getElementById('loader').classList.add("loading");
-        } else {
-          setTimeout(endLoading, 500 - (Date.now() - time));
-          time = null;
-        }
-      }
-    }
-    window.addEventListener('DOMContentLoaded', endLoading);
-    document.getElementById('loader').addEventListener('click', endLoading);
-  </script>
-
 
 <div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
 </div>
@@ -322,7 +270,7 @@
       
     </picture>
     
-      <img fetchpriority="high" src="/images/banner.webp" alt="">
+      <img fetchpriority="high" src="/images/banner.jpg" alt="">
     
   
 
@@ -366,19 +314,19 @@
         
 <div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.webp"
+    data-src="/avatar/avatar.png"
     data-sizes="auto"
     alt="EasyCTF"
     class="lazyload"
   />
   <div class="sidebar-author-name">EasyCTF</div>
-  <div class="sidebar-description">少女祈祷中...</div>
+  <div class="sidebar-description">Learning CTF...</div>
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
     
-    <div class="sidebar-state-number">1</div>
+    <div class="sidebar-state-number">5</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -491,7 +439,23 @@
         <ul>
           
             <li>
-              <a href="http://localhost:1313/post/1/">1</a>
+              <a href="http://localhost:1313/post/docker/">docker</a>
+            </li>
+          
+            <li>
+              <a href="http://localhost:1313/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">Linux的DNS服务器搭建</a>
+            </li>
+          
+            <li>
+              <a href="http://localhost:1313/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/">RCE绕过总结</a>
+            </li>
+          
+            <li>
+              <a href="http://localhost:1313/post/web%E5%AE%89%E5%85%A8/">Web安全</a>
+            </li>
+          
+            <li>
+              <a href="http://localhost:1313/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/">搭建CTF平台</a>
             </li>
           
         </ul>
@@ -528,7 +492,7 @@
       
         <li class="archive-article">
           <div class="archive-article-date-wrap">
-            <a href="http://localhost:1313/post/1/">
+            <a href="http://localhost:1313/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/">
               <time
                 class="dt-published"
                 datetime="2025-01-07 21:01:51 &#43;0800 CST"
@@ -538,8 +502,80 @@
             </a>
           </div>
           
-            <a class="archive-article-title" href="http://localhost:1313/post/1/"
-              >1</a
+            <a class="archive-article-title" href="http://localhost:1313/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/"
+              >搭建CTF平台</a
+            >
+          
+        </li>
+      
+        <li class="archive-article">
+          <div class="archive-article-date-wrap">
+            <a href="http://localhost:1313/post/web%E5%AE%89%E5%85%A8/">
+              <time
+                class="dt-published"
+                datetime="2025-01-07 21:01:51 &#43;0800 CST"
+                itemprop="datePublished"
+                >2025-01</time
+              >
+            </a>
+          </div>
+          
+            <a class="archive-article-title" href="http://localhost:1313/post/web%E5%AE%89%E5%85%A8/"
+              >Web安全</a
+            >
+          
+        </li>
+      
+        <li class="archive-article">
+          <div class="archive-article-date-wrap">
+            <a href="http://localhost:1313/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/">
+              <time
+                class="dt-published"
+                datetime="2025-01-07 21:01:51 &#43;0800 CST"
+                itemprop="datePublished"
+                >2025-01</time
+              >
+            </a>
+          </div>
+          
+            <a class="archive-article-title" href="http://localhost:1313/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/"
+              >RCE绕过总结</a
+            >
+          
+        </li>
+      
+        <li class="archive-article">
+          <div class="archive-article-date-wrap">
+            <a href="http://localhost:1313/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/">
+              <time
+                class="dt-published"
+                datetime="2025-01-07 21:01:51 &#43;0800 CST"
+                itemprop="datePublished"
+                >2025-01</time
+              >
+            </a>
+          </div>
+          
+            <a class="archive-article-title" href="http://localhost:1313/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/"
+              >Linux的DNS服务器搭建</a
+            >
+          
+        </li>
+      
+        <li class="archive-article">
+          <div class="archive-article-date-wrap">
+            <a href="http://localhost:1313/post/docker/">
+              <time
+                class="dt-published"
+                datetime="2025-01-07 21:01:51 &#43;0800 CST"
+                itemprop="datePublished"
+                >2025-01</time
+              >
+            </a>
+          </div>
+          
+            <a class="archive-article-title" href="http://localhost:1313/post/docker/"
+              >docker</a
             >
           
         </li>
@@ -587,6 +623,18 @@
   
   
 
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
 
 
 <footer id="footer">
@@ -618,7 +666,7 @@
       <div>
         <span class="icon-brush"
           >&nbsp;
-            0
+            2.7k
           </span
         >
         &nbsp;|&nbsp;
@@ -626,7 +674,7 @@
           
           
 
-          00:00
+          00:15
         </span>
       </div>
     
@@ -666,19 +714,19 @@
       
 <div class="sidebar-author">
   <img
-    data-src="/avatar/avatar.webp"
+    data-src="/avatar/avatar.png"
     data-sizes="auto"
     alt="EasyCTF"
     class="lazyload"
   />
   <div class="sidebar-author-name">EasyCTF</div>
-  <div class="sidebar-description">少女祈祷中...</div>
+  <div class="sidebar-description">Learning CTF...</div>
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
     
-    <div class="sidebar-state-number">1</div>
+    <div class="sidebar-state-number">5</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -996,7 +1044,7 @@
           title: "",
           url: "http:\/\/localhost:1313\/archives\/",
           description: "",
-          cover: "http:\/\/localhost:1313\/images\/banner.webp",
+          cover: "http:\/\/localhost:1313\/images\/banner.jpg",
         };
       </script>
     

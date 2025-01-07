@@ -1,1 +1,376 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EasyCTF Blog</title><link>https://example.org/post/</link><description>Recent content on EasyCTF Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 07 Jan 2025 21:01:51 +0800</lastBuildDate><atom:link href="https://example.org/post/index.xml" rel="self" type="application/rss+xml"/><item><title>1</title><link>https://example.org/post/1/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/1/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EasyCTF Blog</title><link>https://example.org/post/</link><description>Recent content on EasyCTF Blog</description><generator>Hugo</generator><language>zh-cn</language><lastBuildDate>Tue, 07 Jan 2025 21:01:51 +0800</lastBuildDate><atom:link href="https://example.org/post/index.xml" rel="self" type="application/rss+xml"/><item><title>docker</title><link>https://example.org/post/docker/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/docker/</guid><description>&lt;h2 id="一-安装docker">
+&lt;a class="header-anchor" href="#%e4%b8%80-%e5%ae%89%e8%a3%85docker">&lt;/a>
+一 安装docker
+&lt;/h2>&lt;p>阅读官方文档进行安装https://docs.docker.com/engine/install/ubuntu/&lt;/p>
+&lt;p>设置 Docker 的&lt;code>apt&lt;/code>存储库&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">apt&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">get&lt;/span> &lt;span class="n">update&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">apt&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">get&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="n">ca&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">certificates&lt;/span> &lt;span class="n">curl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">m&lt;/span> &lt;span class="mi">0755&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">d&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">etc&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">keyrings&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">fsSL&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">download&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">docker&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">linux&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ubuntu&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">gpg&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">etc&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">keyrings&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">docker&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">asc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">sudo&lt;/span> &lt;span class="n">chmod&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">etc&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">keyrings&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">docker&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">asc&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>配置镜像加速&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">sudo mkdir -p /etc/docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo tee /etc/docker/daemon.json &lt;span class="s">&amp;lt;&amp;lt;-&amp;#39;EOF&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">{
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;https://rd4ovv3y.mirror.aliyuncs.com&amp;#34;]
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl daemon-reload
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl restart docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>==安装完成后使用docker version验证安装是否成功==&lt;/p>
+&lt;h2 id="二-docker的使用">
+&lt;a class="header-anchor" href="#%e4%ba%8c-docker%e7%9a%84%e4%bd%bf%e7%94%a8">&lt;/a>
+二 docker的使用
+&lt;/h2>&lt;h3 id="1下载镜像">
+&lt;a class="header-anchor" href="#1%e4%b8%8b%e8%bd%bd%e9%95%9c%e5%83%8f">&lt;/a>
+1.下载镜像
+&lt;/h3>&lt;blockquote>
+&lt;p>检索：docker search&lt;/p>
+&lt;p>下载：docker pull&lt;/p>
+&lt;p>列表：docker images &amp;lt;==&amp;gt; docker image ls&lt;/p>
+&lt;p>删除：docker rmi &amp;lt;==&amp;gt; docker rm image&lt;/p>
+&lt;p>查看卷：docker volume ls&lt;/p>
+&lt;p>镜像名:标签（版本）&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="2启动容器">
+&lt;a class="header-anchor" href="#2%e5%90%af%e5%8a%a8%e5%ae%b9%e5%99%a8">&lt;/a>
+2.启动容器
+&lt;/h3>&lt;blockquote>
+&lt;p>==运行：docker run==
+查看：docker ps（运行中的容器） docker ps -a 查看所有容器
+停止：docker stop
+启动：docker start
+重启：docker restart
+状态：docker stats
+日志：docker logs
+==进入：docker exec==
+删除：docker rm&lt;/p></description></item><item><title>Linux的DNS服务器搭建</title><link>https://example.org/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/linux%E7%9A%84dns%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA/</guid><description>&lt;h1 id="dns域名解析服务">
+&lt;a class="header-anchor" href="#dns%e5%9f%9f%e5%90%8d%e8%a7%a3%e6%9e%90%e6%9c%8d%e5%8a%a1">&lt;/a>
+DNS域名解析服务
+&lt;/h1>&lt;h2 id="准备工作">
+&lt;a class="header-anchor" href="#%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c">&lt;/a>
+准备工作
+&lt;/h2>&lt;h3 id="设置服务器网络参数设置主机名">
+&lt;a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%bd%91%e7%bb%9c%e5%8f%82%e6%95%b0%e8%ae%be%e7%bd%ae%e4%b8%bb%e6%9c%ba%e5%90%8d">&lt;/a>
+设置服务器网络参数，设置主机名
+&lt;/h3>&lt;h4 id="网络参数">
+&lt;a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e5%8f%82%e6%95%b0">&lt;/a>
+网络参数
+&lt;/h4>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">参见配置文件： /etc/sysconfig/network-scripts/ifcfg-ens33
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DEVICE=ens33		设备名称
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME=ens33			网卡名称
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">BOOTPROTO=static	static为静态ip地址
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ONBOOT=yes			开机是否激活网卡（yes激活，no禁用）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">IPADDR=				配置IP地址
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NETMASK=			配置子网掩码
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">PREFIX=				配置子网掩码(位数)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">GATEWAY=			配置默认网关
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">DNS1=				配置首选DNS地址
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">注意：如有备用DNS地址的配置项为DNS2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>注意：网卡配置文件内，选项要大写，小写不报错，但不生效，参数可小写&lt;/strong>&lt;/p>
+&lt;h4 id="设置主机名">
+&lt;a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e4%b8%bb%e6%9c%ba%e5%90%8d">&lt;/a>
+设置主机名
+&lt;/h4>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">三种方式
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1.nmtui
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2.vim /etc/hostname
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3.hostnamectl set-hostname 主机名
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安装软件包">
+&lt;a class="header-anchor" href="#%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85">&lt;/a>
+安装软件包
+&lt;/h2>&lt;h4 id="安装方式">
+&lt;a class="header-anchor" href="#%e5%ae%89%e8%a3%85%e6%96%b9%e5%bc%8f">&lt;/a>
+安装方式
+&lt;/h4>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">安装bind软件包，需要先挂载光盘
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mount /dev/cdrom /mnt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">挂载	 设备名称	 挂载点目录
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1.rpm安装
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cd /挂载点目录/Packages
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rpm -i 安装包名
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2.yum安装
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum安装需要配置yum软件仓库
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum install 安装包名
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="yum软件仓库配置">
+&lt;a class="header-anchor" href="#yum%e8%bd%af%e4%bb%b6%e4%bb%93%e5%ba%93%e9%85%8d%e7%bd%ae">&lt;/a>
+yum软件仓库配置
+&lt;/h4>&lt;h5 id="本地源">
+&lt;a class="header-anchor" href="#%e6%9c%ac%e5%9c%b0%e6%ba%90">&lt;/a>
+本地源
+&lt;/h5>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">cd /etc/yum.repos.d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vim 任意名.repo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[glj]			仓库名称自定义
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">name=			yum仓库描述可有可无
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">baseurl=file://	指定yum仓库的路径,file://表示本地仓库
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">enabled=1		表示启用该仓库，1为启用，0为不启用
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gpgcheck=0		是否校验仓库软件包的签名，1为校验，0为不校验
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="网络源">
+&lt;a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e6%ba%90">&lt;/a>
+网络源
+&lt;/h5>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">或
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="编辑配置文件">
+&lt;a class="header-anchor" href="#%e7%bc%96%e8%be%91%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6">&lt;/a>
+编辑配置文件
+&lt;/h2>&lt;h3 id="主配置文件etcnamedconf">
+&lt;a class="header-anchor" href="#%e4%b8%bb%e9%85%8d%e7%bd%ae%e6%96%87%e4%bb%b6etcnamedconf">&lt;/a>
+主配置文件/etc/named.conf
+&lt;/h3>&lt;h4 id="全局配置">
+&lt;a class="header-anchor" href="#%e5%85%a8%e5%b1%80%e9%85%8d%e7%bd%ae">&lt;/a>
+全局配置
+&lt;/h4>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">options {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> listen-on port 53 { any; };
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> _ _ _ _ _ _ _ _ _ _ _ _ _略
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">设置named服务器监听端口及ip地址，为不同网段做dns需要使用any
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">（any为所有）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> allow-query { any; };
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 			_ _ _ _ _ _ _ _ _ _ _ _ _略
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">设置可以请求解析的客户机地址（设置某网段，any为所有）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> dnssec-validation no;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">					_ _ _ _ _ _ _ _ _ _ _ _ _略
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="区域配置或者在etcnamedrfc1912zones也行">
+&lt;a class="header-anchor" href="#%e5%8c%ba%e5%9f%9f%e9%85%8d%e7%bd%ae%e6%88%96%e8%80%85%e5%9c%a8etcnamedrfc1912zones%e4%b9%9f%e8%a1%8c">&lt;/a>
+区域配置(或者在/etc/named.rfc1912.zones也行)
+&lt;/h4>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">zone &amp;#34;正向域&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type master;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file &amp;#34;文件名1&amp;#34;;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zone &amp;#34;反向域.in-addr.arpa&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type master;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file &amp;#34;文件名2&amp;#34;;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">type hint（提示作用） master（主dns服务器） slave（从dns服务器）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">样例:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zone &amp;#34;server.com&amp;#34; IN { 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type 	master; 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file 	&amp;#34;server.com.zone&amp;#34;; 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zone &amp;#34;16.16.172.in-addr.arpa&amp;#34; IN { 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type master;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file &amp;#34;172.16.16.arpa&amp;#34;; 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>注意：根域不能动&lt;/strong>&lt;/p></description></item><item><title>RCE绕过总结</title><link>https://example.org/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/</guid><description>&lt;h2 id="常见可代替命令">
+&lt;a class="header-anchor" href="#%e5%b8%b8%e8%a7%81%e5%8f%af%e4%bb%a3%e6%9b%bf%e5%91%bd%e4%bb%a4">&lt;/a>
+常见可代替命令
+&lt;/h2>&lt;p>cat 查看文件内容&lt;/p>
+&lt;pre>&lt;code>more:一页一页的显示档案内容
+less:与 more 类似
+head:查看头几行
+tac:从最后一行开始显示，可以看出 tac 是 cat 的反向显示
+tail:查看尾几行
+nl：显示的时候，顺便输出行号
+od:以二进制的方式读取档案内容
+vi:一种编辑器，这个也可以查看
+vim:一种编辑器，这个也可以查看
+sort:可以查看
+uniq:可以查看
+ls：查看目录
+dir：查看目录
+&lt;/code>&lt;/pre>
+&lt;h2 id="空格绕过">
+&lt;a class="header-anchor" href="#%e7%a9%ba%e6%a0%bc%e7%bb%95%e8%bf%87">&lt;/a>
+空格绕过
+&lt;/h2>&lt;pre>&lt;code>&amp;gt; &amp;lt; &amp;lt;&amp;gt; 重定向符
+%20(space)
+%09(tab)
+$IFS$9 
+${IFS}（最好用这个）
+$IFS 
+%0a 换行符
+{cat,flag.txt} 在大括号中逗号可起分隔作用
+&lt;/code>&lt;/pre>
+&lt;h2 id="简单符号绕过正则">
+&lt;a class="header-anchor" href="#%e7%ae%80%e5%8d%95%e7%ac%a6%e5%8f%b7%e7%bb%95%e8%bf%87%e6%ad%a3%e5%88%99">&lt;/a>
+简单符号绕过正则
+&lt;/h2>&lt;h3 id="1单双引号法">
+&lt;a class="header-anchor" href="#1%e5%8d%95%e5%8f%8c%e5%bc%95%e5%8f%b7%e6%b3%95">&lt;/a>
+1、单双引号法
+&lt;/h3>&lt;pre>&lt;code>ca''t flag.txt
+ca&amp;quot;&amp;quot;t flag.txt
+&lt;/code>&lt;/pre>
+&lt;p>因为单双引号中并没有字符，相当于在其中没有添加任何字符，命令意思不变&lt;/p>
+&lt;h3 id="2跨行符绕过">
+&lt;a class="header-anchor" href="#2%e8%b7%a8%e8%a1%8c%e7%ac%a6%e7%bb%95%e8%bf%87">&lt;/a>
+2、跨行符&amp;rsquo;'绕过
+&lt;/h3>&lt;p>跨行符的意思为接着上一行的内容，转到下一行接着输入命令，上下行均是一条命令&lt;/p>
+&lt;h2 id="通配符绕过正则">
+&lt;a class="header-anchor" href="#%e9%80%9a%e9%85%8d%e7%ac%a6%e7%bb%95%e8%bf%87%e6%ad%a3%e5%88%99">&lt;/a>
+通配符绕过正则
+&lt;/h2>&lt;p>通配符可以替代任何字符&lt;/p>
+&lt;pre>&lt;code>shell通配符有：
+
+ * ：表示通配字符0次及以上
+ ? : 表示通配字符0或
+&lt;/code>&lt;/pre>
+&lt;h3 id="1可以通配得到的命令">
+&lt;a class="header-anchor" href="#1%e5%8f%af%e4%bb%a5%e9%80%9a%e9%85%8d%e5%be%97%e5%88%b0%e7%9a%84%e5%91%bd%e4%bb%a4">&lt;/a>
+1、可以通配得到的命令
+&lt;/h3>&lt;p>base64：&lt;/p>
+&lt;pre>&lt;code>/bin/base64 可以通配为：
+ 
+/???/????64
+ 
+作用为将文件以base64编码形式输出
+&lt;/code>&lt;/pre>
+&lt;p>bzip2：&lt;/p></description></item><item><title>Web安全</title><link>https://example.org/post/web%E5%AE%89%E5%85%A8/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/web%E5%AE%89%E5%85%A8/</guid><description>&lt;h2 id="php基本特性">
+&lt;a class="header-anchor" href="#php%e5%9f%ba%e6%9c%ac%e7%89%b9%e6%80%a7">&lt;/a>
+php基本特性
+&lt;/h2>&lt;p>弱类型比较&lt;/p>
+&lt;blockquote>
+&lt;p>1.字符串和数字比较，字符串会被转换成数字&lt;/p>
+&lt;p>&amp;ldquo;admin&amp;rdquo; == 0 true&lt;/p>
+&lt;p>admin被转换成数字，由于admin是纯字符串，转换失败 int(admin)=0&lt;/p>
+&lt;p>2.混合字符串转换成数字，看字符串的第一个&lt;/p>
+&lt;p>&amp;ldquo;1admin&amp;rdquo; == 1 true&lt;/p>
+&lt;p>3.字段串开头以xex开头，x代表数字会被转换成科学计数法&lt;/p>
+&lt;p>1e9 1x10⁹&lt;/p>
+&lt;p>对输入长度限制，又需要＞=很大的值时使用&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">strlen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$money&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">&amp;lt;=&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="nv">$money&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="nx">time&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;!&lt;/span>&lt;span class="nx">is_array&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$money&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nv">$flag&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>a和b的md5值前两位是==0e开头== xex 变成科学技术法&lt;/p>
+&lt;p>==QNKCDZO 和 240610708==&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span>&lt;span class="p">]))&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$a&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;a&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$b&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;b&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$a&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="nv">$b&lt;/span>&lt;span class="p">)&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;lt;center&amp;gt;Wrong Answer!&amp;lt;/center&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$a&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$b&lt;/span>&lt;span class="p">))&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;lt;center&amp;gt;&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="nv">$flag&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="s2">&amp;#34;&amp;lt;/center&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> &lt;span class="k">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;lt;center&amp;gt;Wrong Answer!&amp;lt;/center&amp;gt;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">常用的MD5加密后以0E开头的有
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> QNKCDZO
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 240610708
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> byGcY
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sonZ7y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> aabg7XSs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> aabC9RqS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> s878926199a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> s155964671a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> s214587387a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> s1091221200a
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-php" data-lang="php">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">读字符串的函数，使用数组为被读为NULL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">&amp;lt;?&lt;/span>&lt;span class="nx">php&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">include&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;flag.php&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v1&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v2&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nx">isset&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v3&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$v1&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v1&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$v2&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v2&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$v3&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$_GET&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;v3&amp;#39;&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$v1&lt;/span>&lt;span class="o">!=&lt;/span>&lt;span class="nv">$v2&lt;/span>&lt;span class="o">&amp;amp;&amp;amp;&lt;/span>&lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$v1&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="nx">md5&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$v2&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">!&lt;/span>&lt;span class="nx">strcmp&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$v3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nv">$flag&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">echo&lt;/span> &lt;span class="nv">$flag&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>数组传参?v1[]=1&amp;amp;v2[]=2&amp;amp;v3[]=3&lt;/p></description></item><item><title>搭建CTF平台</title><link>https://example.org/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</link><pubDate>Tue, 07 Jan 2025 21:01:51 +0800</pubDate><guid>https://example.org/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/</guid><description>&lt;h2 id="gzctf">
+&lt;a class="header-anchor" href="#gzctf">&lt;/a>
+GZCTF
+&lt;/h2>&lt;p>在当前文件夹下（就是你GZCTF靶场的配置目录），创建 &lt;strong>appsettings.json&lt;/strong>：&lt;/p>
+&lt;p>vim appsettings.json&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;AllowedHosts&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;*&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Database&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Host=db:5432;Database=gzctf;Username=postgres;Password=@glj20030528&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">此处&lt;/span>&lt;span class="n">Password内容可以自定义&lt;/span>&lt;span class="err">（安全起见，至少包含数字及字母大小写）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;RedisCache&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;cache:6379,abortConnect=false&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;EmailConfig&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">邮件配置，用于找回密码之类的，这里就用&lt;/span>&lt;span class="mi">163&lt;/span>&lt;span class="err">举例&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;SendMailAddress&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1186437492@qq.com&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">邮件发送者&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;UserName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1186437492@qq.com&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="n">SMTP用户名&lt;/span>&lt;span class="err">，就是你开启&lt;/span>&lt;span class="n">SMTP的邮箱&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Password&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;wmqxnajprwqrbacb&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">你得&lt;/span>&lt;span class="n">STMP服务器密码&lt;/span>&lt;span class="err">，唯一，&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Smtp&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Host&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;smtp.qq.com&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="mi">163&lt;/span>&lt;span class="err">邮箱的&lt;/span>&lt;span class="n">stmp服务器地址&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Port&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">465&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="n">stmp端口&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;XorKey&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;@glj20030528&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">此处&lt;/span>&lt;span class="n">XorKey可以自定义&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ContainerProvider&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Docker&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;PortMappingType&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;Default&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;EnableTrafficCapture&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;PublicEntry&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;192.168.103.22&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">//&lt;/span> &lt;span class="err">域名或&lt;/span>&lt;span class="n">IP配置&lt;/span>&lt;span class="err">，用于容器生成&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="err">域名不带&lt;/span>&lt;span class="n">http&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">https&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;DockerConfig&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;SwarmMode&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Uri&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;unix:///var/run/docker.sock&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;RequestLogging&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">false&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;DisableRateLimit&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;RegistryConfig&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;UserName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;DOCKER_USERNAME&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Password&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;DOCKER_PASSWORD&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ServerAddress&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;DOCKER_ADDRESS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;CaptchaConfig&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;Provider&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;None&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;SiteKey&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;SecretKey&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;GoogleRecaptcha&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;VerifyAPIAddress&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;https://www.recaptcha.net/recaptcha/api/siteverify&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;RecaptchaThreshold&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;0.5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ForwardedOptions&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ForwardedHeaders&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">5&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ForwardLimit&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;ForwardedForHeaderName&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;X-Forwarded-For&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;TrustedNetworks&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在当前文件夹下，创建 &lt;strong>docker-compose.yml&lt;/strong>：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vim docker-compose.yml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>将以下内容保存为 &lt;strong>docker-compose.yml&lt;/strong> 文件，并替换为你的初始化参数（注释需删除，保存后可能会报错）：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-mysql" data-lang="mysql">&lt;span class="line">&lt;span class="cl">&lt;span class="n">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;3.7&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="n">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">  &lt;/span>&lt;span class="n">gzctf&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">registry&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">cn&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">shanghai&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">aliyuncs&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">gztime&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">gzctf&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;GZCTF_ADMIN_PASSWORD=&amp;lt;Password&amp;gt;&amp;#34;&lt;/span>&lt;span class="w">          &lt;/span>&lt;span class="c1"># &amp;lt;Password&amp;gt;换成账户管理员密码，管理员账户为admin
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">      &lt;/span>&lt;span class="c1"># choose your backend language `en_US` / `zh_CN` / `ja_JP`
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;LC_ALL=zh_CN.UTF-8&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;80:8080&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;./data/files:/app/files&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;./appsettings.json:/app/appsettings.json:ro&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="c1"># - &amp;#34;./kube-config.yaml:/app/kube-config.yaml:ro&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;/var/run/docker.sock:/var/run/docker.sock&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">depends_on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">  &lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">redis&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">  &lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">postgres&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">    &lt;/span>&lt;span class="n">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;POSTGRES_PASSWORD=GzctfAuto233&amp;#34;&lt;/span>&lt;span class="w">          &lt;/span>&lt;span class="c1"># 数据库密码，务必要和appsettings.json中的配置一致
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="w">    &lt;/span>&lt;span class="n">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">      &lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;./data/db:/var/lib/postgresql/data&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改后的&lt;/p></description></item></channel></rss>

